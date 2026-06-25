@@ -1,32 +1,55 @@
-name: Build Non-Hermitian PDF
+name: Build LaTeX Diff PDF
 
 on:
-  push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
-  build-pdf:
+  diff:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout proposed version
         uses: actions/checkout@v4
+        with:
+          path: new
+          fetch-depth: 0
 
-      - name: Compile main.tex
+      - name: Checkout base version
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: old
+          fetch-depth: 0
+
+      - name: Install latexdiff
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexdiff
+
+      - name: Create flattened diff source
+        run: |
+          latexdiff --flatten old/main.tex new/main.tex > new/main-diff.tex
+
+      - name: Compile diff PDF
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex
+          working_directory: new
+          root_file: main-diff.tex
           latexmk_use_lualatex: true
           latexmk_shell_escape: false
 
-      - name: Upload compiled PDF
+      - name: Upload diff PDF
         uses: actions/upload-artifact@v4
         with:
-          name: non-hermitian-photonics-pdf
-          path: main.pdf
-          if-no-files-found: error
+          name: latex-diff-pdf
+          path: new/main-diff.pdf
+
+      - name: Upload diff source on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-diff-debug-source
+          path: |
+            new/main-diff.tex
+            new/main-diff.log
