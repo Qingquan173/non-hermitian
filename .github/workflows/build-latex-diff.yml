@@ -6,7 +6,7 @@ on:
       - "**/*.tex"
       - "**/*.bib"
       - "figures/**"
-      - ".github/workflows/latex-diff-pdf.yml"
+      - ".github/workflows/build-latex-diff.yml"
 
 permissions:
   contents: read
