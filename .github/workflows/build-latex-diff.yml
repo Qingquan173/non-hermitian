@@ -61,7 +61,7 @@ jobs:
         run: |
           latexdiff \
             --flatten \
-            --type=CFONT \
+            --type=UNDERLINE \
             --append-safecmd="cite,citep,citet,ref,eqref,cref,Cref,url,href,includegraphics" \
             --exclude-textcmd="chapter,section,subsection,subsubsection,caption" \
             old/main.tex new/main.tex > new/main-diff.tex
