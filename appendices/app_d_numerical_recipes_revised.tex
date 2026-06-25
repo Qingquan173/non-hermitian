@@ -1,0 +1,497 @@
+\chapter{Numerical Recipes}
+\label{app:numerical-recipes}
+
+This appendix provides implementation notes for the key
+computational tasks discussed in the book. Each recipe records a
+reproducible algorithm for producing the corresponding figure or numerical
+check. The steps are written in a language-independent form so that they
+can be reimplemented with any reliable numerical package.
+
+
+%% ================================================================
+\section{Lorentz dispersion model}
+\label{sec:recipe-lorentz}
+
+\paragraph{Aim.}
+Compute the complex permittivity $\epsr(\omega)$ for a single-oscillator
+Lorentz model with passive damping or linear gain
+(Figure~\ref{fig:lorentz-dispersion}).
+
+\paragraph{Equations.}
+\begin{equation}
+ \epsr(\omega) = \varepsilon_\infty
+ + \frac{F}{\omega_0^2 - \omega^2 - i\gamma\omega},
+ \label{eq:recipe-lorentz}
+\end{equation}
+with the $e^{-i\omega t}$ convention. Positive $\gamma$ gives
+absorption ($\Im\epsr > 0$ near resonance); negative $\gamma$ gives
+gain.
+
+\paragraph{Procedure.}
+\begin{enumerate}
+ \item Choose parameters: $\varepsilon_\infty$, $F$, $\omega_0$,
+ $\gamma_{\mathrm{abs}} > 0$, $\gamma_{\mathrm{gain}} < 0$.
+ \item Sample $\omega$ on a uniform grid in
+ $[0.15\,\omega_0,\; 2.25\,\omega_0]$.
+ \item Evaluate~\eqref{eq:recipe-lorentz} for both $\gamma$ values.
+ \item Plot $\Re\epsr(\omega)$ and $\Im\epsr(\omega)$ on separate
+ panels.
+\end{enumerate}
+
+\paragraph{Result.}
+This calculation gives the Lorentz-dispersion figure
+\texttt{fig\_f5\_lorentz\_dispersion.pdf}.
+
+
+%% ================================================================
+\section{Two-mode exceptional point}
+\label{sec:recipe-ep}
+
+\paragraph{Aim.}
+Compute eigenvalue surfaces and eigenvector coalescence for the
+canonical $2\times 2$ EP Hamiltonian
+(Figures~\ref{fig:ep-eigenvalue-surfaces}
+and~\ref{fig:ep-eigenvector-coalescence}).
+
+\paragraph{Equations.}
+\begin{equation}
+ H = \begin{pmatrix} i\gamma & \kappa \\ \kappa & -i\gamma
+ \end{pmatrix}, \qquad
+ \lambda_\pm = \pm\sqrt{\kappa^2 - \gamma^2}.
+ \label{eq:recipe-ep}
+\end{equation}
+
+\paragraph{Procedure.}
+\begin{enumerate}
+ \item Create a 2D grid in $(\kappa, \gamma)$.
+ \item Evaluate $\lambda_\pm = \pm\sqrt{\kappa^2 - \gamma^2}$ on the
+ grid (complex square root).
+ \item Plot $\Re\lambda_\pm$ and $\Im\lambda_\pm$ as 3D surfaces.
+ \item For the eigenvector figure: fix $\kappa = 1$, sweep $\gamma$,
+ diagonalize $H$ numerically, compute the overlap
+ $|\langle v_+|v_-\rangle|$ and the condition number of the
+ eigenvector matrix.
+ \item For the encircling figure: parameterize a loop
+ $\delta = r\,e^{i\theta}$ around the branch point, plot
+ $\pm\sqrt{\delta}$ in the complex $\lambda$ plane.
+\end{enumerate}
+
+\paragraph{Result.}
+This calculation gives the EP eigenvalue and eigenvector figures
+\texttt{fig\_f8\_ep\_eigenvalues.pdf} and
+\texttt{fig\_f8\_ep\_vectors.pdf}.
+
+
+%% ================================================================
+\section{Point-gap winding number}
+\label{sec:recipe-winding}
+
+\paragraph{Aim.}
+Compute the spectral winding number of a complex band loop around a
+reference energy (see the complex-band-loop discussion associated with
+Figure~\ref{fig:complex-band-loop}).
+
+\paragraph{Equations.}
+One-band non-Hermitian dispersion:
+\begin{equation}
+ \omega(k) = \omega_0 + t_R\,e^{ik} + t_L\,e^{-ik} + i\gamma_0,
+ \label{eq:recipe-winding}
+\end{equation}
+with $t_R \neq t_L$ producing a loop that can encircle the origin.
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item Sample $k$ uniformly on $[-\pi, \pi]$ with $N \gg 1$ points.
+ \item Evaluate $\omega(k)$ and form $z(k) = \omega(k) - E_{\mathrm{ref}}$.
+ \item Compute the unwrapped phase:
+ $\phi(k) = \mathrm{unwrap}[\arg z(k)]$.
+ \item The winding number is $W = [\phi(\pi) - \phi(-\pi)]/(2\pi)$.
+ \item Compare inside and outside reference points: an inside point
+ gives $|W| \ge 1$; an outside point gives $W = 0$.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives a point-gap winding diagnostic and the
+complex-band-loop figure \texttt{fig\_f13\_complex\_band\_loop.pdf}.
+If the standalone point-gap-winding schematic is omitted from the main
+text, the same calculation can be reported directly in the discussion of
+the remaining loop figure.
+
+
+%% ================================================================
+\section{Non-Hermitian skin effect (Hatano--Nelson model)}
+\label{sec:recipe-skin}
+
+\paragraph{Aim.}
+Demonstrate the PBC/OBC spectral discrepancy, eigenmode localization,
+and the generalized Brillouin zone for a minimal skin-effect model
+(Figures~\ref{fig:skin-pbc-obc-spectra},
+\ref{fig:skin-mode-localization}, and~\ref{fig:gbz-circle}).
+
+\paragraph{Equations.}
+Hatano--Nelson chain: $H_{n,n+1} = t_R$, $H_{n+1,n} = t_L$, with
+$t_R > t_L$.
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item \textbf{PBC spectrum:} $E_{\mathrm{PBC}}(k)
+ = t_R\,e^{ik} + t_L\,e^{-ik}$; plot as a complex loop.
+ \item \textbf{OBC spectrum:} construct the $N\times N$ tridiagonal
+ matrix, diagonalize, plot eigenvalues in the complex plane.
+ \item \textbf{Mode localization:} normalize $|\psi_j(n)|^2$ for each
+ eigenstate; compute center of mass
+ $\bar{n}_j = \sum_n n\,|\psi_j(n)|^2$.
+ \item \textbf{GBZ:} the GBZ radius is
+ $r = \sqrt{t_L/t_R}$; plot the circle $|\beta| = r$ and compare
+ $E_{\mathrm{GBZ}}(\theta) = t_R\,r\,e^{i\theta}
+ + t_L\,e^{-i\theta}/r$ with the OBC spectrum.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives the PBC/OBC spectra, skin-mode localization, and
+GBZ figures: \texttt{fig\_f14\_pbc\_obc\_spectra.pdf},
+\texttt{fig\_f14\_skin\_modes.pdf}, and \texttt{fig\_f14\_gbz.pdf}.
+
+
+%% ================================================================
+\section{BIC topological charge and Q scaling}
+\label{sec:recipe-bic}
+
+\paragraph{Aim.}
+Visualize the far-field polarization winding around a BIC and the
+quality-factor scaling under charge merging
+(Figures~\ref{fig:bic-polarization-charge}
+and~\ref{fig:bic-q-scaling}).
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item \textbf{Polarization field:} on a 2D grid in $(k_x, k_y)$,
+ set the polarization angle $\theta = q\,\mathrm{atan2}(k_y, k_x)$
+ with $q = +1$ or $q = -1$. Plot as a quiver field; the BIC is the
+ singularity at the origin.
+ \item \textbf{Q scaling:} for an isolated charge-one BIC,
+ $\gamma \propto k^2$ so $Q \propto k^{-2}$. For a merged super-BIC,
+ $\gamma \propto k^6$ so $Q \propto k^{-6}$. Plot both on a
+ log--log scale.
+ \item \textbf{BZF scaling:} $Q \sim 1/(\alpha^2 k^2)$ for
+ perturbation strength $\alpha$; plot several $\alpha$ values.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives the BIC polarization-charge and quality-factor scaling
+figures, \texttt{fig\_f16\_bic\_polarization\_charge.pdf} and
+\texttt{fig\_f16\_q\_scaling.pdf}.
+
+
+%% ================================================================
+\section{PML validation and mode-ratio filtering}
+\label{sec:recipe-pml}
+
+\paragraph{Aim.}
+Illustrate the PML validation protocol: physical QNM poles remain stable
+under PML parameter variation, while PML continuum modes move
+(Figures~\ref{fig:pml-convergence} and~\ref{fig:pml-mode-ratio}).
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item Generate synthetic eigenfrequencies: one physical QNM near
+ a target pole, plus several PML modes whose positions depend
+ strongly on the PML absorption strength $\sigma_{\max}$.
+ \item Sweep $\sigma_{\max}$; for each value, compute the mode ratio
+ $\mathrm{MR} = \int_{\Omega_{\mathrm{phys}}}|\EE|^2\,\dd V
+ \big/ \int_{\Omega_{\mathrm{total}}}|\EE|^2\,\dd V$.
+ \item Physical QNMs cluster near $\mathrm{MR} \approx 1$; PML modes
+ near $\mathrm{MR} \ll 1$.
+ \item Plot the eigenvalue trajectories and the mode-ratio
+ separation.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives the PML-convergence and PML-mode-ratio figures,
+\texttt{fig\_f17\_pml\_convergence.pdf} and
+\texttt{fig\_f17\_pml\_mode\_ratio.pdf}.
+
+
+%% ================================================================
+\section{Scattering pole-zero map}
+\label{sec:recipe-pole-zero}
+
+\paragraph{Aim.}
+Visualize the S-matrix pole and zero trajectories under gain/loss
+tuning, the CPA-laser threshold, and the complex scattering response
+landscape discussed in Chapter~\ref{ch:poles-zeros}.
+
+\paragraph{Equations.}
+Scalar scattering response:
+\begin{equation}
+ s(\omega; g) = \prod_j \frac{\omega - z_j(g)}{\omega - p_j(g)},
+ \label{eq:recipe-pole-zero}
+\end{equation}
+where poles $p_j$ rise from $\Im\omega < 0$ and zeros $z_j$ descend
+from $\Im\omega > 0$ as the gain parameter $g$ increases.
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item Define two pole--zero pairs near a central frequency, plus one
+ detuned background pair.
+ \item Sweep $g$ from $0$ to above threshold ($g = 1$).
+ \item Plot pole and zero trajectories; mark the real-axis crossing
+ (lasing/CPA/CPA-laser).
+ \item Evaluate $|s(\omega)|^2$ on the real axis for several $g$
+ values; plot spectra.
+ \item Evaluate $\log_{10}|s(\omega)|$ on a 2D complex-$\omega$ grid
+ near threshold; display as a heatmap.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives pole--zero trajectories and scattering-response
+data. If the schematic pole--zero figures are not included in the main
+text, the recipe remains useful as a numerical check on the meromorphic
+structure of the scattering amplitude.
+
+
+%% ================================================================
+\section{EP sensing response versus noise}
+\label{sec:recipe-ep-sensing}
+
+\paragraph{Aim.}
+Compare the frequency splitting, linewidth, and signal-to-noise ratio
+of an EP sensor with a conventional diabolic-point sensor, following the
+scaling discussion in Chapter~\ref{ch:devices}.
+
+\paragraph{Equations.}
+Diabolic-point splitting: $\Delta\omega_{\mathrm{DP}} \propto \epsilon$.
+EP splitting: $\Delta\omega_{\mathrm{EP}} \propto \sqrt{\epsilon}$.
+Noise proxy: $\sigma_{\mathrm{EP}} \propto \sqrt{1 + c/\epsilon}$
+(diverges as $\epsilon \to 0$).
+
+\paragraph{Algorithm.}
+\begin{enumerate}
+ \item Sample $\epsilon$ on a logarithmic grid.
+ \item Compute signal, noise, responsivity, and SNR for both sensor
+ types.
+ \item Plot three panels: splitting, responsivity+noise, and SNR
+ comparison.
+\end{enumerate}
+
+\paragraph{Result.}
+The calculation gives the EP sensing response-versus-noise diagnostic;
+depending on the presentation, it may be shown as a figure or summarized
+as the scaling argument in Chapter~\ref{ch:devices}.
+
+
+%% ================================================================
+\section{Practical convergence protocol}
+\label{sec:convergence-protocol}
+
+This section collects a systematic convergence protocol for
+non-Hermitian photonic eigenvalue calculations. Each step can be
+implemented as a post-processing check on the output of any FEM or
+FDTD solver.
+
+\subsection{Mesh refinement}
+\label{ssec:mesh-convergence}
+
+The first convergence check is mesh refinement. Run the eigenvalue
+calculation at two or more mesh densities (e.g.\ $h$, $h/2$, $h/4$)
+and monitor the change in the complex eigenfrequency
+$\tilde{\omega}_n$. For a well-resolved mode, the eigenfrequency
+should converge as
+\begin{equation}
+ |\tilde{\omega}_n(h) - \tilde{\omega}_n(h/2)|
+ \sim C\,h^{2p},
+ \label{eq:mesh-convergence}
+\end{equation}
+where $p$ is the polynomial order of the finite-element basis. If
+the convergence rate is slower than expected, the mode may be
+under-resolved---common for tightly confined plasmonic modes or modes
+with sharp field gradients at material interfaces.
+
+\paragraph{Recommended criterion.}
+Require $|\Delta\tilde{\omega}| / |\tilde{\omega}| < 10^{-4}$ between
+the two finest meshes. For quality factors exceeding $10^4$, tighter
+convergence ($< 10^{-6}$) may be needed because $Q = \Re\tilde{\omega}
+/(2|\Im\tilde{\omega}|)$ amplifies small errors in
+$\Im\tilde{\omega}$.
+
+\subsection{PML thickness and absorption profile}
+\label{ssec:pml-convergence}
+
+The PML is an artificial absorbing boundary that must be thick enough
+to suppress reflections but thin enough to keep the computational
+domain manageable. The PML convergence test varies the PML thickness
+$d_{\mathrm{PML}}$ (or equivalently the PML absorption strength
+$\sigma_{\max}$) while keeping the physical domain fixed.
+
+\paragraph{PML thickness selection rule.}
+For a mode with wavelength $\lambda$ and exterior decay constant
+$\kappa_{\mathrm{out}}$, a practical starting point is
+\begin{equation}
+ d_{\mathrm{PML}} \gtrsim
+ \max\left(\lambda,\frac{4}{\kappa_{\mathrm{out}}}\right),
+ \label{eq:pml-thickness-rule}
+\end{equation}
+followed by an explicit sweep of thickness and absorption strength.
+This estimate is only a starting scale: radiative QNMs, grazing waves,
+and quasi-BICs often require thicker PMLs and finer PML discretization
+than any one-line rule can predict.
+
+\paragraph{PML eigenvalue filtering.}
+Not all eigenvalues returned by the solver correspond to physical QNMs.
+The PML itself introduces a branch of spurious ``PML modes'' whose
+eigenvalues depend on the PML parameters. These are identified by
+their sensitivity to PML changes: physical QNM eigenvalues remain
+stable as $d_{\mathrm{PML}}$ varies, while PML modes drift
+systematically. A mode-ratio filter
+\begin{equation}
+ \mathrm{MR}_n = \frac{\int_{\mathrm{physical}} |\EE_n|^2\;\dd V}
+ {\int_{\mathrm{total}} |\EE_n|^2\;\dd V}
+ \label{eq:mode-ratio-filter}
+\end{equation}
+provides a second diagnostic: physical QNMs have $\mathrm{MR} \approx 1$,
+while PML modes have $\mathrm{MR} \ll 1$. In practice, a threshold
+$\mathrm{MR} > 0.5$ is sufficient to filter out most PML artifacts.
+
+\subsection{Dispersive material branch verification}
+\label{ssec:dispersion-branches}
+
+For dispersive materials with multiple resonances (e.g.\ Lorentz
+oscillators), the analytic continuation $\epsr(\omega)$ to complex
+$\omega$ must use the same causal branch as the real-frequency material
+model. Eigenvalues that are artifacts of a wrong analytic continuation
+are unphysical. Useful checks are:
+\begin{enumerate}
+ \item Evaluate $\epsr(\tilde{\omega}_n)$ at the computed complex
+ eigenfrequency.
+ \item Track the mode continuously from a real-frequency or weakly open
+ reference calculation while keeping the material poles and square-root
+ branches fixed.
+ \item Check passivity on the real axis for the underlying material
+ model; the sign of $\Im\epsr(\tilde{\omega}_n)$ at a complex
+ eigenfrequency is not, by itself, a reliable physicality test.
+ \item Discard eigenvalues that switch sheets, converge to material
+ poles rather than electromagnetic resonances, or fail the residual and
+ PML-variation checks.
+\end{enumerate}
+
+\subsection{Biorthogonal normalisation check}
+\label{ssec:biorthogonal-check}
+
+After extracting the QNM eigenvectors, verify the biorthogonal
+normalisation condition
+\begin{equation}
+ \langle \tilde{\EE}_m, \tilde{\EE}_n \rangle_{\mathrm{uc}}
+ = \delta_{mn},
+ \label{eq:biorthogonal-check}
+\end{equation}
+where $\langle\cdot,\cdot\rangle_{\mathrm{uc}}$ is the unconjugated
+inner product (Chapter~\ref{ch:qnm}). Deviations from $\delta_{mn}$
+indicate either insufficient mesh resolution, incorrect PML
+regularisation, or missing modes. A practical tolerance is
+$|\langle \tilde{\EE}_m, \tilde{\EE}_n \rangle_{\mathrm{uc}} -
+\delta_{mn}| < 10^{-3}$.
+
+\subsection{Reproducibility checklist}
+\label{ssec:reproducibility}
+
+For publication-quality results, record the following for every
+eigenvalue calculation:
+\begin{center}
+\begin{tabular}{ll}
+ \hline
+ \textbf{Parameter} & \textbf{Purpose} \\
+ \hline
+ Mesh element size $h$ & Resolution verification \\
+ FE polynomial order $p$ & Convergence rate check \\
+ PML thickness $d_{\mathrm{PML}}$ & Artificial-boundary control \\
+ PML absorption $\sigma_{\max}$ & Reflection suppression \\
+ Dispersion model & Material branch verification \\
+ Contour parameters ($\mathcal{C}$, $N_q$) & Eigensolver control \\
+ Mode-ratio threshold & PML filtering \\
+ Biorthogonal norm tolerance & Normalisation quality \\
+ \hline
+\end{tabular}
+\end{center}
+A compact reporting table of this kind is recommended for numerical QNM
+results that support physical claims. Its consistent use would
+significantly improve the reproducibility of non-Hermitian photonic
+calculations.
+
+
+
+\subsection{Minimum reporting standard for Maxwell eigenvalue computations}
+\label{ssec:min-reporting-standard}
+
+A non-Hermitian Maxwell calculation is not fully reproducible unless the
+reported eigenfrequency is accompanied by an estimate of its numerical
+uncertainty and by a check that the computed left and right modes solve
+the same physical problem.  The following minimal standard is recommended
+for any result that is used to support a physical claim.
+
+First, report the residual norm of the right eigenproblem.  Consider a
+discretised generalized Maxwell problem evaluated at the nonlinear
+eigenfrequency $\tilde{\omega}_n$:
+\begin{equation}
+  \mathbf{A}(\tilde{\omega}_n)\mathbf{x}_n
+  = \tilde{\omega}_n^2\,\mathbf{B}(\tilde{\omega}_n)\mathbf{x}_n,
+  \label{eq:reporting-gep}
+\end{equation}
+the dimensionless residual may be written as
+\begin{equation}
+  \rho_n^{\mathrm{R}}
+  = \frac{\|\mathbf{A}(\tilde{\omega}_n)\mathbf{x}_n
+  - \tilde{\omega}_n^2\mathbf{B}(\tilde{\omega}_n)\mathbf{x}_n\|_2}
+  {\|\mathbf{A}(\tilde{\omega}_n)\mathbf{x}_n\|_2
+  + |\tilde{\omega}_n|^2\|\mathbf{B}(\tilde{\omega}_n)\mathbf{x}_n\|_2}.
+  \label{eq:right-residual}
+\end{equation}
+For a well-converged mode, $\rho_n^{\mathrm{R}}$ should be much smaller
+than the quoted relative uncertainty in $\tilde{\omega}_n$.  Reporting
+only the eigenfrequency without the residual is insufficient, because
+spurious PML modes and poorly resolved physical modes can have plausible
+complex frequencies.
+
+Second, when using biorthogonal perturbation theory, report the residual
+of the left eigenproblem as well.  If the adjoint mode is represented by
+$\mathbf{y}_n$, the corresponding residual is
+\begin{equation}
+  \rho_n^{\mathrm{L}}
+  = \frac{\|\mathbf{A}^{\mathrm{T}}(\tilde{\omega}_n)\mathbf{y}_n
+  - \tilde{\omega}_n^2\mathbf{B}^{\mathrm{T}}(\tilde{\omega}_n)\mathbf{y}_n\|_2}
+  {\|\mathbf{A}^{\mathrm{T}}(\tilde{\omega}_n)\mathbf{y}_n\|_2
+  + |\tilde{\omega}_n|^2\|\mathbf{B}^{\mathrm{T}}(\tilde{\omega}_n)\mathbf{y}_n\|_2}.
+  \label{eq:left-residual}
+\end{equation}
+The transpose, rather than the Hermitian conjugate, appears because the
+reciprocal Maxwell problem uses the unconjugated bilinear pairing.  If a
+paper reports Petermann factors, adjoint sensitivities, or mode-volume
+corrections but gives no left-mode residual, the numerical evidence is
+incomplete.
+
+Third, quote an uncertainty band obtained from at least two independent
+refinement directions.  Mesh refinement tests the spatial discretisation;
+PML variation tests the artificial boundary; material-branch checks test
+the analytic continuation.  A conservative uncertainty estimate is
+\begin{equation}
+  \Delta\tilde{\omega}_n
+  = \max\left\{
+  |\tilde{\omega}_n(h)-\tilde{\omega}_n(h/2)|,
+  |\tilde{\omega}_n(d_{\mathrm{PML}})-\tilde{\omega}_n(2d_{\mathrm{PML}})|,
+  |\tilde{\omega}_n(N_q)-\tilde{\omega}_n(2N_q)|
+  \right\},
+  \label{eq:qnm-uncertainty-band}
+\end{equation}
+where $N_q$ is the number of quadrature points in a contour eigensolver
+when such a method is used.  The reported real frequency, linewidth, and
+quality factor should be rounded consistently with this uncertainty.
+For example, quoting $Q=1.23748\times10^5$ is misleading if the PML
+sweep changes $Q$ by three percent.
+
+Finally, state which modes were discarded and why.  Non-Hermitian
+Maxwell spectra contain physical resonances, PML continuum modes,
+material-pole artifacts, and numerical outliers.  A transparent report
+should say how each class was separated.  The combination of residual
+norms, mode-ratio filtering, branch verification, and refinement sweeps
+is usually sufficient.  Without these checks, an apparently impressive
+exceptional point or ultra-high-$Q$ resonance may simply be a numerical
+artifact of the discretised open boundary.

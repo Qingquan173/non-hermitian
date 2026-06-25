@@ -1,0 +1,304 @@
+\chapter{Vector Calculus and Maxwell Notation}
+\label{app:vector}
+
+This appendix collects the vector-calculus identities, integration
+formulas, and notational conventions used throughout the book. All
+results are stated for three-dimensional space with Cartesian, or
+where noted, curvilinear coordinates.
+
+
+%% ================================================================
+\section{Curl identities}
+\label{sec:curl-identities}
+
+The following identities are used repeatedly in the derivation of
+Maxwell inner products and self-adjointness conditions.
+
+\paragraph{Double curl.}
+\begin{equation}
+ \curl(\curl\FF) = \grad(\divg\FF) - \nabla^2\FF.
+ \label{eq:double-curl}
+\end{equation}
+
+\paragraph{Curl of a product.}
+\begin{equation}
+ \curl(f\,\FF) = f\,\curl\FF + (\grad f)\times\FF.
+ \label{eq:curl-product}
+\end{equation}
+
+\paragraph{Divergence of a cross product.}
+\begin{equation}
+ \divg(\FF \times \GG) = \GG\cdot\curl\FF - \FF\cdot\curl\GG.
+ \label{eq:div-cross}
+\end{equation}
+This identity is the vector-calculus engine behind every
+integration-by-parts argument in this book: integrating both sides over
+a volume and applying the divergence theorem converts a volume integral
+of curls into a surface integral.
+
+
+%% ================================================================
+\section{Integration by parts for curl operators}
+\label{sec:integration-by-parts}
+
+Let $\FF$ and $\GG$ be smooth vector fields on a domain $\Omega$ with
+boundary $\partial\Omega$ and outward normal $\nn$. Then
+\begin{equation}
+ \int_\Omega \GG\cdot\curl\FF\;\dd V
+ = \int_\Omega \FF\cdot\curl\GG\;\dd V
+ + \oint_{\partial\Omega}(\FF\times\GG)\cdot\nn\;\dd S.
+ \label{eq:curl-ibp-app}
+\end{equation}
+This is the fundamental self-adjointness identity for the curl operator.
+Setting $\FF = \EE$ and $\GG = \mur^{-1}\curl\EE$ (or the
+corresponding magnetic formulation) and requiring the surface integral
+to vanish yields the Hermiticity condition for the Maxwell curl--curl
+operator (Chapter~\ref{ch:energy-inner}).
+
+\subsection{Boundary conditions that kill the surface term}
+\label{ssec:vanishing-surface}
+
+The surface integral in~\eqref{eq:curl-ibp-app} vanishes if any of the
+following conditions hold on $\partial\Omega$:
+\begin{enumerate}
+ \item \textbf{Perfect electric conductor (PEC):}
+ $\nn\times\EE = 0$ on $\partial\Omega$.
+ \item \textbf{Perfect magnetic conductor (PMC):}
+ $\nn\times\HH = 0$ on $\partial\Omega$.
+ \item \textbf{Periodic boundary conditions:}
+ $\FF$ and $\GG$ satisfy Bloch periodicity on opposite faces, so the
+ contributions cancel pairwise.
+ \item \textbf{Fields decay sufficiently fast:}
+ for an unbounded domain, if $|\FF|$ and $|\GG|$ decay faster than
+ $1/r$ as $r \to \infty$, the surface integral at infinity vanishes.
+\end{enumerate}
+When the surface term does \emph{not} vanish---as for outgoing radiation
+boundary conditions (Silver--M\"uller condition) or for modes with
+$|\FF| \sim e^{+\Im k\,r}$---the curl--curl operator is no longer
+self-adjoint, and the system is non-Hermitian
+(Chapter~\ref{ch:boundaries}).
+
+
+%% ================================================================
+\section{The divergence theorem and Poynting's theorem}
+\label{sec:divergence-poynting}
+
+The divergence theorem relates a volume integral of a divergence to a
+surface integral:
+\begin{equation}
+ \int_\Omega \divg\FF\;\dd V
+ = \oint_{\partial\Omega} \FF\cdot\nn\;\dd S.
+ \label{eq:divergence-theorem}
+\end{equation}
+Applying this to the Poynting vector
+$\SS = \EE\times\HH$ gives the integral form of Poynting's theorem:
+\begin{equation}
+ -\pdv{}{t}\int_\Omega u\;\dd V
+ = \oint_{\partial\Omega} \SS\cdot\nn\;\dd S
+ + \int_\Omega \sigma\,|\EE|^2\;\dd V,
+ \label{eq:poynting-integral}
+\end{equation}
+where $u$ is the electromagnetic energy density and $\sigma$ is the
+conductivity (representing ohmic loss).
+
+
+%% ================================================================
+\section{Bloch-periodic boundary terms}
+\label{sec:bloch-boundary}
+
+For a photonic crystal with lattice vectors $\aa_1, \aa_2, \aa_3$ and
+Bloch wave vector $\kk$, the fields satisfy
+\begin{equation}
+ \FF(\rr + \aa_j) = e^{i\kk\cdot\aa_j}\,\FF(\rr).
+ \label{eq:bloch-bc}
+\end{equation}
+On a unit cell $\Omega_{\mathrm{cell}}$ with faces $S_j^+$ and $S_j^-$
+related by $S_j^+ = S_j^- + \aa_j$, the surface integral
+in~\eqref{eq:curl-ibp-app} cancels pairwise when the two fields belong
+to compatible Bloch sectors. For example, if both fields carry the same
+real Bloch wave vector and the inner product uses the usual conjugation,
+or if an unconjugated bilinear form pairs $\kk$ with $-\kk$, the two
+opposite faces contribute
+\begin{equation}
+ \int_{S_j^+}(\FF\times\GG)\cdot\nn\;\dd S
+ + \int_{S_j^-}(\FF\times\GG)\cdot\nn\;\dd S = 0 .
+ \label{eq:bloch-surface-cancel}
+\end{equation}
+The cancellation is not simply the algebraic difference
+$e^{i\kk\cdot\aa_j}-e^{-i\kk\cdot\aa_j}$; it also uses the opposite
+orientations of the outward normals and the adjoint boundary condition.
+For real $\kk$ in a lossless periodic medium this gives the usual
+self-adjoint Bloch Maxwell problem. For complex $\kk$, as in non-Bloch
+or GBZ constructions, the operator is generally non-self-adjoint and
+one must pair right and adjoint Bloch sectors explicitly.
+
+
+%% ================================================================
+\section{Silver--M\"uller radiation condition}
+\label{sec:silver-muller}
+
+For an open scatterer in three dimensions, the outgoing-wave condition
+at infinity is the Silver--M\"uller condition:
+\begin{equation}
+ \lim_{r\to\infty} r\,\bigl[
+ \hat{\rr}\times(\curl\EE) - ik\,\EE
+ \bigr] = 0,
+ \label{eq:silver-muller-app}
+\end{equation}
+uniformly in all directions $\hat{\rr}$. This condition selects
+outgoing spherical waves and excludes incoming waves. It is the
+mathematical statement of the ``no incoming radiation'' assumption that
+makes the scattering problem well posed and the Maxwell operator
+non-self-adjoint (Chapter~\ref{ch:boundaries}).
+
+
+%% ================================================================
+\section{Notation conventions}
+\label{sec:notation}
+
+\subsection{Time convention}
+The time-harmonic convention throughout this book is
+$e^{-i\omega t}$. With this choice:
+\begin{itemize}
+ \item A passive medium has $\Im\epsr > 0$ (absorption).
+ \item A gain medium has $\Im\epsr < 0$ (amplification).
+ \item A QNM eigenfrequency $\omtil = \omega_r - i\gamma$ with
+ $\gamma > 0$ represents a decaying mode.
+\end{itemize}
+
+\subsection{Field quantities}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Name & SI Unit \\
+\midrule
+$\EE$ & Electric field & V/m \\
+$\HH$ & Magnetic field & A/m \\
+$\DD$ & Electric displacement & C/m$^2$ \\
+$\BB$ & Magnetic induction & T \\
+$\SS = \EE\times\HH$ & Poynting vector & W/m$^2$ \\
+$\epsr$ & Relative permittivity & dimensionless \\
+$\mur$ & Relative permeability & dimensionless \\
+$\omega$ & Angular frequency & rad/s \\
+$\omtil$ & Complex eigenfrequency & rad/s \\
+$\kk$ & Wave vector & 1/m \\
+$c$ & Speed of light in vacuum & m/s \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Operators and inner products}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+$\curl$ & Curl operator \\
+$\divg$ & Divergence operator \\
+$\grad$ & Gradient operator \\
+$\hat{\Theta}$ & Maxwell curl--curl operator \\
+$\Smat$ & Scattering matrix \\
+$\Tmat$ & Transfer matrix \\
+$\langle\cdot|\cdot\rangle$ & Standard (conjugated) inner product \\
+$(\cdot,\cdot)$ & Unconjugated bilinear form \\
+$\Qfac$ & Quality factor \\
+$\wnum$ & Winding number \\
+$\PT$ & Parity--time operator \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Electromagnetic reciprocity from vector calculus}
+\label{sec:reciprocity-vector}
+
+The Lorentz reciprocity theorem, introduced physically in
+Chapter~\ref{ch:energy-inner}, can be derived purely from the vector
+calculus identities of this appendix.
+
+\subsection{Statement and proof}
+\label{ssec:reciprocity-proof}
+
+Consider two solutions $(\EE_1, \HH_1)$ and $(\EE_2, \HH_2)$ of
+Maxwell's equations at the same frequency $\omega$ in a medium with
+permittivity tensor $\boldsymbol{\varepsilon}$ and permeability
+$\mu_0$. The sources are localised current densities $\JJ_1$ and
+$\JJ_2$. Define the \emph{reaction} of field~1 on source~2:
+\begin{equation}
+ \langle 1, 2 \rangle = \int_V \EE_1 \cdot \JJ_2\;\dd^3 r.
+ \label{eq:reaction-app}
+\end{equation}
+Lorentz reciprocity states that
+$\langle 1, 2 \rangle = \langle 2, 1 \rangle$ whenever
+$\boldsymbol{\varepsilon} = \boldsymbol{\varepsilon}^\transpose$
+(the permittivity tensor is symmetric, not necessarily Hermitian).
+
+\paragraph{Proof.}
+Start from the divergence-of-cross-product identity~\eqref{eq:div-cross}:
+\begin{equation}
+ \nabla \cdot (\EE_1 \times \HH_2 - \EE_2 \times \HH_1)
+ = \HH_2 \cdot (\nabla \times \EE_1) - \EE_1 \cdot (\nabla \times \HH_2)
+ - \HH_1 \cdot (\nabla \times \EE_2) + \EE_2 \cdot (\nabla \times \HH_1).
+ \label{eq:reciprocity-divergence}
+\end{equation}
+Substituting Maxwell's curl equations
+$\nabla \times \EE_j = i\omega\mu_0\HH_j$ and
+$\nabla \times \HH_j = -i\omega\boldsymbol{\varepsilon}\EE_j + \JJ_j$
+into the right-hand side:
+\begin{align}
+ \text{RHS} &= i\omega\mu_0\,\HH_2 \cdot \HH_1
+ + i\omega\,\EE_1 \cdot \boldsymbol{\varepsilon}\EE_2
+ - \EE_1 \cdot \JJ_2
+ \notag\\
+ &\quad - i\omega\mu_0\,\HH_1 \cdot \HH_2
+ - i\omega\,\EE_2 \cdot \boldsymbol{\varepsilon}\EE_1
+ + \EE_2 \cdot \JJ_1.
+ \label{eq:reciprocity-rhs}
+\end{align}
+The $\mu_0$ terms cancel. The permittivity terms give
+$i\omega(\EE_1 \cdot \boldsymbol{\varepsilon}\EE_2
+- \EE_2 \cdot \boldsymbol{\varepsilon}\EE_1)$, which vanishes if and
+only if $\boldsymbol{\varepsilon} = \boldsymbol{\varepsilon}^\transpose$.
+What remains is
+\begin{equation}
+ \nabla \cdot (\EE_1 \times \HH_2 - \EE_2 \times \HH_1)
+ = \EE_2 \cdot \JJ_1 - \EE_1 \cdot \JJ_2.
+ \label{eq:reciprocity-simplified}
+\end{equation}
+Integrating over a volume $V$ that contains both sources and applying
+the divergence theorem, the left-hand side becomes a surface integral
+that vanishes when the fields satisfy Silver--M\"uller radiation
+conditions at infinity (or when the surface is a PEC boundary):
+\begin{equation}
+ \oint_{\partial V} (\EE_1 \times \HH_2 - \EE_2 \times \HH_1)
+ \cdot \hat{\nn}\;\dd S = 0.
+ \label{eq:reciprocity-surface}
+\end{equation}
+Therefore $\langle 2, 1 \rangle - \langle 1, 2 \rangle = 0$, proving
+Lorentz reciprocity.
+
+\subsection{Reciprocity versus Hermiticity}
+\label{ssec:reciprocity-vs-hermiticity}
+
+The proof makes clear the distinction emphasised in
+Chapter~\ref{ch:energy-inner}: reciprocity requires
+$\boldsymbol{\varepsilon}^\transpose = \boldsymbol{\varepsilon}$
+(symmetric), while Hermiticity of the Maxwell operator requires
+$\boldsymbol{\varepsilon}^\dagger = \boldsymbol{\varepsilon}$
+(Hermitian, i.e.\ real for a scalar permittivity). A medium with
+complex symmetric $\boldsymbol{\varepsilon}$ (such as a lossy isotropic
+dielectric) is reciprocal but not Hermitian. Conversely, a
+magneto-optical medium with real antisymmetric off-diagonal elements is
+Hermitian (lossless) but not reciprocal.
+
+This distinction is central to non-Hermitian photonics: most passive
+non-Hermitian systems (lossy dielectrics, absorbing metasurfaces) are
+reciprocal, and reciprocity constrains their scattering matrices and
+coupled-mode models. Reciprocity can fail when the material tensor,
+temporal modulation, active feedback, or an effective modal reduction
+lacks the relevant transpose symmetry. Such non-reciprocal or
+asymmetric effective couplings are one route to point-gap winding and
+the non-Hermitian skin effect of Chapter~\ref{ch:skin-effect}, although
+the precise criterion is spectral rather than simply the presence or
+absence of material loss.

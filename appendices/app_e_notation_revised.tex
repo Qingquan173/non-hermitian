@@ -1,0 +1,327 @@
+\chapter{Notation and Symbols}
+\label{app:notation}
+
+This appendix provides a consolidated reference for all symbols,
+conventions, and abbreviations used in the monograph. Symbols are
+grouped by category; within each group they appear roughly in the order
+of first use.
+
+
+%% ================================================================
+\section{General conventions}
+\label{sec:conventions}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Convention & Choice in this book \\
+\midrule
+Time-harmonic factor & $e^{-i\omega t}$ \\
+Fourier sign & $\tilde{f}(\omega)
+ = \int_{-\infty}^{\infty} f(t)\,e^{+i\omega t}\,\dd t$ \\
+SI units throughout & \\
+Vacuum permittivity & $\varepsilon_0$; relative: $\epsr$ \\
+Vacuum permeability & $\mu_0$; relative: $\mur$ \\
+Speed of light & $c = 1/\sqrt{\varepsilon_0\mu_0}$ \\
+Passive medium & $\Im\epsr(\omega) > 0$ \\
+Gain medium & $\Im\epsr(\omega) < 0$ \\
+QNM decay & $\omtil = \omega_r - i\gamma$, $\gamma > 0$ \\
+Quality factor & $\Qfac = \omega_r / (2\gamma)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Electromagnetic fields and sources}
+\label{sec:em-symbols}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Name & SI Unit \\
+\midrule
+$\EE(\rr, t)$ & Electric field & V\,m$^{-1}$ \\
+$\HH(\rr, t)$ & Magnetic field & A\,m$^{-1}$ \\
+$\DD(\rr, t)$ & Electric displacement & C\,m$^{-2}$ \\
+$\BB(\rr, t)$ & Magnetic flux density & T \\
+$\JJ(\rr, t)$ & Current density & A\,m$^{-2}$ \\
+$\rho(\rr, t)$ & Charge density & C\,m$^{-3}$ \\
+$\SS = \EE \times \HH$ & Poynting vector & W\,m$^{-2}$ \\
+$u$ & Electromagnetic energy density & J\,m$^{-3}$ \\
+$\sigma$ & Conductivity & S\,m$^{-1}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Material and structural parameters}
+\label{sec:material-symbols}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Introduced \\
+\midrule
+$\epsr(\rr,\omega)$ & Complex relative permittivity & Ch.~\ref{ch:light-eigenvalue} \\
+$\mur(\rr,\omega)$ & Complex relative permeability & Ch.~\ref{ch:light-eigenvalue} \\
+$n = \sqrt{\epsr\mur}$ & Complex refractive index & Ch.~\ref{ch:loss-gain-dispersion} \\
+$\omega_0$ & Oscillator resonance frequency & Ch.~\ref{ch:loss-gain-dispersion} \\
+$\omega_p$ & Plasma frequency & Ch.~\ref{ch:loss-gain-dispersion} \\
+$\gamma$ & Damping rate / gain--loss contrast & Chs.~\ref{ch:loss-gain-dispersion}, \ref{ch:exceptional-points} \\
+$F$ & Oscillator strength & Ch.~\ref{ch:loss-gain-dispersion} \\
+$a$, $\aa_j$ & Lattice constant, lattice vectors & Ch.~\ref{ch:periodicity} \\
+$\GG$ & Reciprocal lattice vector & Ch.~\ref{ch:periodicity} \\
+$d$ & Layer thickness & App.~\ref{app:transfer} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Operators and eigenproblems}
+\label{sec:operator-symbols}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Introduced \\
+\midrule
+$\hat{\Theta}$ & Maxwell curl--curl operator & Ch.~\ref{ch:light-eigenvalue} \\
+$\omtil_n = \omega_n - i\gamma_n$ & Complex QNM eigenfrequency & Ch.~\ref{ch:qnm} \\
+$\tilde{\EE}_n$, $\tilde{\HH}_n$ & QNM field profiles & Ch.~\ref{ch:qnm} \\
+$|r_j\rangle$, $\langle l_j|$ & Right, left eigenvectors & App.~\ref{app:nonnormal} \\
+$N_j$ & Biorthogonal normalization & Ch.~\ref{ch:qnm}, App.~\ref{app:nonnormal} \\
+$K_j$ & Petermann factor & Ch.~\ref{ch:qnm}, App.~\ref{app:nonnormal} \\
+$r_j$ & Phase rigidity & App.~\ref{app:nonnormal} \\
+$J_m(\lambda)$ & Jordan block of size $m$ & App.~\ref{app:nonnormal} \\
+$\sigma_\epsilon(A)$ & $\epsilon$-pseudospectrum & App.~\ref{app:nonnormal} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Scattering and transfer matrices}
+\label{sec:scattering-symbols}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Introduced \\
+\midrule
+$\Smat(\omega)$ & Scattering matrix & Ch.~\ref{ch:boundaries} \\
+$\Tmat$ & Transfer matrix & Ch.~\ref{ch:pt-symmetric}, App.~\ref{app:transfer} \\
+$t$, $t'$ & Transmission coefficients & App.~\ref{app:transfer} \\
+$r_L$, $r_R$ & Reflection coefficients (left, right) & App.~\ref{app:transfer} \\
+$\det\Smat$ & Determinant (CPA condition) & Ch.~\ref{ch:poles-zeros} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Topology and band theory}
+\label{sec:topology-symbols}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Introduced \\
+\midrule
+$\kk$, $k$ & Bloch wave vector & Ch.~\ref{ch:periodicity} \\
+$\beta = e^{ik a}$ & Bloch phase factor & Ch.~\ref{ch:skin-effect} \\
+$\mathcal{A}_n(\kk)$ & Berry connection & Ch.~\ref{ch:berry-maxwell} \\
+$\mathcal{F}_{xy}$ & Berry curvature & Ch.~\ref{ch:berry-maxwell} \\
+$C$ & Chern number & Ch.~\ref{ch:berry-maxwell} \\
+$\wnum$ & Spectral winding number & Ch.~\ref{ch:complex-bands} \\
+$q$ & BIC topological charge & Ch.~\ref{ch:bic-topology} \\
+$E_{\mathrm{ref}}$ & Point-gap reference energy & Ch.~\ref{ch:point-gap} \\
+GBZ & Generalized Brillouin zone & Ch.~\ref{ch:skin-effect} \\
+$P^{\mathrm{bi}}$ & Biorthogonal polarization & Ch.~\ref{ch:bbc-rebuilt} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Abbreviations}
+\label{sec:abbreviations}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Abbreviation & Meaning \\
+\midrule
+BIC & Bound state in the continuum \\
+BBC & Bulk-boundary correspondence \\
+BdG & Bogoliubov--de Gennes \\
+BZ & Brillouin zone \\
+BZF & Brillouin zone folding \\
+CPA & Coherent perfect absorption \\
+EP & Exceptional point \\
+EP$_n$ & Exceptional point of order $n$ \\
+FDTD & Finite-difference time-domain \\
+FEM & Finite-element method \\
+GBZ & Generalized Brillouin zone \\
+LDOS & Local density of states \\
+NH & Non-Hermitian \\
+NHSE & Non-Hermitian skin effect \\
+OBC & Open boundary conditions \\
+PBC & Periodic boundary conditions \\
+PEC & Perfect electric conductor \\
+PMC & Perfect magnetic conductor \\
+PML & Perfectly matched layer \\
+$\PT$ & Parity--time \\
+PWE & Plane-wave expansion \\
+QNM & Quasinormal mode \\
+SNR & Signal-to-noise ratio \\
+SSH & Su--Schrieffer--Heeger \\
+TCMT & Temporal coupled-mode theory \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%% ================================================================
+\section{Sign conventions and equivalent formulations}
+\label{sec:sign-conventions}
+
+Non-Hermitian photonics inherits two competing sign conventions from
+the optics and physics communities, and careless mixing of conventions
+is a common source of sign errors in the literature. This section
+records the choices made in this book and their relationship to the
+alternatives.
+
+\subsection{Time-harmonic convention}
+\label{ssec:time-convention}
+
+The convention throughout is $e^{-i\omega t}$, following the majority of the
+optics and photonics literature. The condensed-matter and high-energy
+communities often use $e^{+i\omega t}$. The two conventions are
+related by complex conjugation of all frequency-domain quantities:
+\begin{center}
+\begin{tabular}{lcc}
+ \toprule
+ \textbf{Quantity} & $e^{-i\omega t}$ (this book) & $e^{+i\omega t}$ \\
+ \midrule
+ Passive loss & $\Im\epsr > 0$ & $\Im\epsr < 0$ \\
+ Gain & $\Im\epsr < 0$ & $\Im\epsr > 0$ \\
+ QNM decay & $\omtil = \omega_r - i\gamma$ & $\omtil = \omega_r + i\gamma$ \\
+ Outgoing wave & $e^{+ikr}$ & $e^{-ikr}$ \\
+ Kramers--Kronig & $\epsr(\omega)$ analytic in upper half-plane & lower half-plane \\
+ \bottomrule
+\end{tabular}
+\end{center}
+When importing results from a paper that uses the opposite convention,
+replace $\omega \to -\omega^*$ (equivalently, $i \to -i$ in all
+material parameters and eigenvalues). The physical observables---power,
+transmission, quality factor---are convention-independent.
+
+\subsection{Three formulations of the Petermann factor}
+\label{ssec:petermann-conventions}
+
+The Petermann factor quantifies the non-orthogonality of QNMs and
+appears in three equivalent forms in the literature. All three are
+used in this book at different points; we record the equivalences here
+for reference.
+
+\paragraph{Formulation 1: unconjugated-norm ratio
+(Chapter~\ref{ch:qnm}).}
+\begin{equation}
+ K_n = \frac{
+ \langle \tilde{\EE}_n^*, \tilde{\EE}_n^* \rangle
+ \cdot
+ \langle \tilde{\EE}_n, \tilde{\EE}_n \rangle
+ }{
+ |\langle \tilde{\EE}_n, \tilde{\EE}_n \rangle_{\mathrm{uc}}|^2
+ },
+ \label{eq:petermann-form1}
+\end{equation}
+where $\langle\cdot,\cdot\rangle$ is the standard conjugated inner
+product and $\langle\cdot,\cdot\rangle_{\mathrm{uc}}$ is the
+unconjugated (bilinear) inner product.
+
+\paragraph{Formulation 2: biorthogonal overlap
+(Appendix~\ref{app:nonnormal}).}
+\begin{equation}
+ K_n = \frac{1}{|\langle l_n | r_n \rangle|^2},
+ \label{eq:petermann-form2}
+\end{equation}
+where $|r_n\rangle$ and $\langle l_n|$ are the right and left
+eigenvectors first normalized to unit norm in the chosen conjugated
+inner product. Equivalently, without that convention one should use
+$K_n=\langle r_n|r_n\rangle\langle l_n|l_n\rangle/
+|\langle l_n|r_n\rangle|^2$. This formulation makes the
+connection to non-normality most transparent: $K_n = 1$ for a normal
+operator and $K_n \to \infty$ at an EP where
+$\langle l_n | r_n \rangle \to 0$.
+
+\paragraph{Formulation 3: phase rigidity
+(Chapter~\ref{ch:exceptional-points}).}
+\begin{equation}
+ K_n = \frac{1}{|r_n^{\mathrm{ph}}|^2},
+ \qquad
+ r_n^{\mathrm{ph}} = \frac{\langle \tilde{\EE}_n, \tilde{\EE}_n
+ \rangle_{\mathrm{uc}}}
+ {\langle \tilde{\EE}_n^*, \tilde{\EE}_n \rangle},
+ \label{eq:petermann-form3}
+\end{equation}
+where $r_n^{\mathrm{ph}}$ is the phase rigidity measuring the ratio of
+the unconjugated to the conjugated inner product. The phase rigidity
+equals unity for a standing wave (Hermitian mode) and decreases toward
+zero as the mode becomes a travelling wave (non-Hermitian, non-normal).
+
+All three formulations give the same numerical value for a given QNM
+when the same bilinear form and normalization convention are used. The
+Cauchy--Schwarz inequality guarantees $K_n \ge 1$, with equality when
+the corresponding left and right vectors are collinear in the chosen
+inner product; normal operators satisfy this for all modes.
+
+\subsection{Gain--loss sign in coupled-mode models}
+\label{ssec:gain-loss-sign}
+
+In the $\PT$-symmetric coupled-mode models of
+Chapter~\ref{ch:pt-symmetric}, the Hamiltonian is written as
+\begin{equation}
+ H = \begin{pmatrix}
+ \omega_0 + i\gamma & \kappa \\
+ \kappa & \omega_0 - i\gamma
+ \end{pmatrix}.
+ \label{eq:pt-hamiltonian-convention}
+\end{equation}
+With our $e^{-i\omega t}$ convention, $+i\gamma$ corresponds to
+\emph{gain} (the mode amplitude grows as $e^{+\gamma t}$) and
+$-i\gamma$ corresponds to \emph{loss}. In the opposite convention
+($e^{+i\omega t}$), the signs are reversed: $-i\gamma$ is gain and
+$+i\gamma$ is loss.
+
+The $\PT$ phase transition occurs at $\gamma = \kappa$ in both
+conventions. Below the transition ($\gamma < \kappa$), the
+eigenvalues are real and the system is in the exact $\PT$-symmetric
+phase. Above the transition ($\gamma > \kappa$), the eigenvalues form
+a complex-conjugate pair and the system is in the broken phase. The
+physical content is identical; only the intermediate sign bookkeeping
+differs.
+
+\subsection{Transfer-matrix ordering}
+\label{ssec:transfer-ordering}
+
+Two conventions exist for the transfer matrix
+(Appendix~\ref{app:transfer}):
+\begin{enumerate}
+ \item \emph{Left-to-right} (this book):
+ $\bigl(\begin{smallmatrix} A \\ B \end{smallmatrix}\bigr)_{\text{right}}
+ = \Tmat\,
+ \bigl(\begin{smallmatrix} A \\ B \end{smallmatrix}\bigr)_{\text{left}}$.
+ \item \emph{Right-to-left}:
+ $\bigl(\begin{smallmatrix} A \\ B \end{smallmatrix}\bigr)_{\text{left}}
+ = \Tmat'\,
+ \bigl(\begin{smallmatrix} A \\ B \end{smallmatrix}\bigr)_{\text{right}}$.
+\end{enumerate}
+The two are related by $\Tmat' = \Tmat^{-1}$. For a reciprocal medium
+($\det\Tmat = 1$), the inverse is obtained by swapping the diagonal
+elements and negating the off-diagonal elements. When comparing
+transfer-matrix results across papers, always check which convention is
+used before multiplying matrices.

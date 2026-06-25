@@ -1,0 +1,349 @@
+\chapter{Transfer Matrices and Scattering}
+\label{app:transfer}
+
+This appendix develops the one-dimensional transfer-matrix formalism
+that appears in Chapters~\ref{ch:pt-symmetric}, \ref{ch:poles-zeros},
+and~\ref{ch:bbc-rebuilt}. The results are exact for multilayer
+dielectric stacks with complex permittivity and provide the
+computational backbone for many of the non-Hermitian scattering
+calculations in this book.
+
+
+%% ================================================================
+\section{Single-layer transfer matrix}
+\label{sec:single-layer}
+
+Consider a homogeneous layer of thickness $d$, refractive index
+$n = n_r + i n_i$, at normal incidence. The electric field at
+position $x$ is a superposition of forward and backward waves:
+\begin{equation}
+ E(x) = A\,e^{ink_0 x} + B\,e^{-ink_0 x},
+ \label{eq:field-ab}
+\end{equation}
+where $k_0 = \omega/c$. The transfer matrix $M$ relates the field
+amplitudes at the left face ($x = 0$) to those at the right face
+($x = d$):
+\begin{equation}
+ \begin{pmatrix} A \\ B \end{pmatrix}_{\!x=d}
+ = M\,
+ \begin{pmatrix} A \\ B \end{pmatrix}_{\!x=0},
+ \qquad
+ M = \begin{pmatrix}
+ e^{ink_0 d} & 0 \\
+ 0 & e^{-ink_0 d}
+ \end{pmatrix}.
+ \label{eq:propagation-matrix}
+\end{equation}
+At an interface between media with indices $n_1$ and $n_2$, the
+interface matrix is
+\begin{equation}
+ I_{12} = \frac{1}{2n_2}\begin{pmatrix}
+ n_2 + n_1 & n_2 - n_1 \\
+ n_2 - n_1 & n_2 + n_1
+ \end{pmatrix}.
+ \label{eq:interface-matrix}
+\end{equation}
+The total transfer matrix for a multilayer stack is the ordered product
+of propagation and interface matrices:
+\begin{equation}
+ \Tmat = I_{N,\mathrm{out}} \cdot M_N \cdots I_{23} \cdot M_2
+ \cdot I_{12} \cdot M_1.
+ \label{eq:total-transfer}
+\end{equation}
+
+
+%% ================================================================
+\section{Scattering matrix from the transfer matrix}
+\label{sec:transfer-to-scatter}
+
+The $2 \times 2$ scattering matrix $\Smat$ relates the outgoing
+amplitudes to the incoming amplitudes:
+\begin{equation}
+ \begin{pmatrix} B_L \\ A_R \end{pmatrix}
+ = \Smat
+ \begin{pmatrix} A_L \\ B_R \end{pmatrix}
+ = \begin{pmatrix}
+ r_L & t' \\
+ t & r_R
+ \end{pmatrix}
+ \begin{pmatrix} A_L \\ B_R \end{pmatrix},
+ \label{eq:smat-def}
+\end{equation}
+where $r_L$, $r_R$ are the reflection coefficients from the left and
+right, and $t$, $t'$ are the transmission coefficients. The conversion
+from the transfer matrix $\Tmat = \bigl(\begin{smallmatrix}
+T_{11} & T_{12} \\ T_{21} & T_{22} \end{smallmatrix}\bigr)$ is
+\begin{equation}
+ t = \frac{1}{T_{22}}, \qquad
+ t' = \frac{\det\Tmat}{T_{22}}, \qquad
+ r_L = -\frac{T_{21}}{T_{22}}, \qquad
+ r_R = \frac{T_{12}}{T_{22}}.
+ \label{eq:transfer-to-scatter}
+\end{equation}
+
+For a reciprocal medium (symmetric $\epsr$ tensor), $t = t'$ and
+$\det\Tmat = 1$. For a non-reciprocal medium, $t \neq t'$ in general.
+
+
+%% ================================================================
+\section{$\PT$-symmetric transfer matrices}
+\label{sec:pt-transfer-app}
+
+A one-dimensional structure with $\PT$ symmetry satisfies
+$n(x) = n^*(-x)$. For a multilayer consisting of a loss layer
+(index $n_0 + i\kappa$, thickness $d$) followed by a gain layer
+(index $n_0 - i\kappa$, thickness $d$), the unit-cell transfer
+matrix is
+\begin{equation}
+ \Tmat_{\mathrm{cell}} = M_{\mathrm{gain}} \cdot I \cdot
+ M_{\mathrm{loss}}.
+ \label{eq:pt-unit-cell}
+\end{equation}
+The $\PT$ condition imposes the constraint
+\begin{equation}
+ \sigma_x\,\Tmat_{\mathrm{cell}}^*\,\sigma_x = \Tmat_{\mathrm{cell}},
+ \qquad \sigma_x = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix},
+ \label{eq:pt-transfer-constraint}
+\end{equation}
+which ensures that $T_{11} = T_{22}^*$ and $T_{12} = T_{21}^*$. For
+the scattering matrix, this gives
+\begin{equation}
+ |t|^2 - |r_L|\,|r_R| = 1
+ \quad\text{(exact $\PT$ relation)},
+ \label{eq:pt-unitarity}
+\end{equation}
+which replaces the Hermitian unitarity condition $|t|^2 + |r|^2 = 1$.
+
+
+\subsection{$\PT$ phase transition from transfer-matrix eigenvalues}
+\label{ssec:pt-phases}
+
+The eigenvalues of $\Tmat_{\mathrm{cell}}$ are
+$\lambda_\pm = \tfrac{1}{2}\mathrm{tr}(\Tmat_{\mathrm{cell}})
+\pm \sqrt{[\tfrac{1}{2}\mathrm{tr}(\Tmat_{\mathrm{cell}})]^2 - 1}$.
+Three regimes arise:
+\begin{enumerate}
+ \item \textbf{$\PT$-symmetric phase}
+ ($|\tfrac{1}{2}\mathrm{tr}\,\Tmat| \le 1$):
+ $\lambda_\pm$ are unimodular; the stack is a Bragg grating with
+ real band structure.
+ \item \textbf{$\PT$-broken phase}
+ ($|\tfrac{1}{2}\mathrm{tr}\,\Tmat| > 1$):
+ $|\lambda_+| > 1 > |\lambda_-|$; one eigenvalue grows exponentially
+ with the number of cells (laser-like amplification), while the
+ other decays (CPA-like absorption).
+ \item \textbf{Exceptional point}
+ ($|\tfrac{1}{2}\mathrm{tr}\,\Tmat| = 1$):
+ $\lambda_+ = \lambda_-$; the transfer matrix has a Jordan block
+ of size 2. This is the $\PT$-symmetry breaking threshold.
+\end{enumerate}
+
+
+%% ================================================================
+\section{Poles and zeros from the transfer matrix}
+\label{sec:poles-zeros-transfer}
+
+The poles and zeros of the scattering matrix can be located directly
+from the transfer matrix:
+\begin{itemize}
+ \item A \textbf{pole} of $\Smat(\omega)$ (a lasing mode) occurs when
+ $T_{22}(\omega) = 0$, since $t = 1/T_{22}$.
+ \item A \textbf{zero} of $\det\Smat(\omega)$ (a CPA mode) occurs when
+ $T_{11}(\omega)=0$, since with the convention above
+ $\det\Smat=T_{11}/T_{22}$. For reciprocal media $\det\Tmat=1$, but
+ this does not prevent $\det\Smat$ from vanishing because the scattering
+ determinant is not the same object as the transfer determinant.
+\end{itemize}
+
+The CPA-laser point is the frequency at which both $T_{22} = 0$ and
+$T_{11} = 0$ simultaneously. For a $\PT$-symmetric stack at real
+frequency, the constraint $T_{11}=T_{22}^*$ makes the pole and zero
+conditions coincide; in practice this simultaneous condition is isolated
+in the $(\omega,\kappa)$ parameter space.
+
+
+%% ================================================================
+\section{Bloch waves in periodic stacks}
+\label{sec:bloch-transfer}
+
+For an infinite periodic stack with unit-cell transfer matrix
+$\Tmat_{\mathrm{cell}}$, the Bloch condition is
+\begin{equation}
+ \Tmat_{\mathrm{cell}}\,
+ \begin{pmatrix} A \\ B \end{pmatrix}
+ = e^{ika}\,
+ \begin{pmatrix} A \\ B \end{pmatrix},
+ \label{eq:bloch-transfer}
+\end{equation}
+so the Bloch phase is $\beta = e^{ik a}$ and the dispersion relation is
+\begin{equation}
+ \cos(ka) = \tfrac{1}{2}\,\mathrm{tr}(\Tmat_{\mathrm{cell}}).
+ \label{eq:dispersion-transfer}
+\end{equation}
+For a Hermitian stack, $\mathrm{tr}(\Tmat_{\mathrm{cell}})$ is real,
+and band gaps correspond to $|\cos(ka)| > 1$. For a non-Hermitian
+stack, $\mathrm{tr}(\Tmat_{\mathrm{cell}})$ is complex, and the
+dispersion defines a curve in the complex $\omega$ plane---the complex
+band structure of Chapter~\ref{ch:complex-bands}.
+
+\subsection{GBZ from the transfer matrix}
+\label{ssec:gbz-transfer}
+
+For a finite open stack, the correct Brillouin zone is the GBZ
+(Section~\ref{sec:gbz}). The GBZ condition $|\beta_n| = |\beta_{n+1}|$
+translates to the condition that the two eigenvalues of
+$\Tmat_{\mathrm{cell}}$ have equal modulus:
+$|\lambda_+| = |\lambda_-|$. Since $\det\Tmat_{\mathrm{cell}} =
+\lambda_+\lambda_- = 1$ for reciprocal media, this gives
+$|\lambda_\pm| = 1$---the GBZ coincides with the ordinary BZ, and there
+is no skin effect. For non-reciprocal media,
+$|\det\Tmat_{\mathrm{cell}}| \neq 1$, and the GBZ deforms away from
+the unit circle, producing the skin effect.
+
+This transfer-matrix derivation of the GBZ is the most direct route
+for one-dimensional photonic structures and connects the abstract
+non-Bloch theory of Chapter~\ref{ch:skin-effect} to concrete
+multilayer calculations.
+
+
+%% ================================================================
+\section{Numerical implementation}
+\label{sec:transfer-numerical}
+
+\subsection{Avoiding numerical overflow}
+\label{ssec:overflow}
+
+For thick stacks with gain ($n_i < 0$), the propagation matrix
+elements $e^{\pm i n k_0 d}$ can overflow or underflow. The standard
+remedy is to factor the transfer matrix after each layer, extracting
+the largest eigenvalue modulus and accumulating the logarithm of the
+total transmission. This ``scattering-matrix propagation algorithm''
+is numerically stable and avoids the exponential overflow that plagues
+naive transfer-matrix products.
+
+\subsection{Complex-frequency evaluation}
+\label{ssec:complex-freq}
+
+For QNM and pole-zero calculations, the transfer matrix must be
+evaluated at complex frequencies $\omega = \omega_r + i\omega_i$.
+The refractive index $n(\omega)$ is then evaluated by analytic
+continuation of the dispersion model (Lorentz, Drude, etc.), and the
+propagation phases $n k_0 d$ become fully complex. No additional
+numerical modification is needed beyond ensuring that the branch cuts
+of the square root in $n(\omega) = \sqrt{\epsr(\omega)}$ are
+consistently chosen.
+
+
+%% ================================================================
+\section{From transfer matrix to scattering matrix}
+\label{sec:t-to-s}
+
+The transfer matrix and scattering matrix encode the same physics but
+organise it differently. Converting between them is a routine but
+essential operation in photonic multilayer calculations.
+
+\subsection{Conversion formulas}
+\label{ssec:ts-conversion}
+
+For a single interface or slab described by the $2\times 2$ transfer
+matrix
+\begin{equation}
+ \Tmat = \begin{pmatrix} T_{11} & T_{12} \\ T_{21} & T_{22} \end{pmatrix},
+ \label{eq:transfer-generic}
+\end{equation}
+relating the field amplitudes on the left to those on the right,
+$\bigl(\begin{smallmatrix} A_R \\ B_R \end{smallmatrix}\bigr)
+= \Tmat\,\bigl(\begin{smallmatrix} A_L \\ B_L \end{smallmatrix}\bigr)$,
+the scattering matrix
+$\bigl(\begin{smallmatrix} B_L \\ A_R \end{smallmatrix}\bigr)
+= \Smat\,\bigl(\begin{smallmatrix} A_L \\ B_R \end{smallmatrix}\bigr)$
+is obtained by rearranging:
+\begin{equation}
+ \Smat = \frac{1}{T_{22}}
+ \begin{pmatrix}
+ -T_{21} & 1 \\
+ T_{11}T_{22} - T_{12}T_{21} & T_{12}
+ \end{pmatrix}
+ = \frac{1}{T_{22}}
+ \begin{pmatrix}
+ -T_{21} & 1 \\
+ \det\Tmat & T_{12}
+ \end{pmatrix}.
+ \label{eq:t-to-s}
+\end{equation}
+The elements have direct physical meaning:
+$t_L = 1/T_{22}$ is the left-to-right transmission amplitude,
+$r_L = -T_{21}/T_{22}$ is the left reflection, and
+$r_R = T_{12}/T_{22}$ is the right reflection. For a reciprocal
+medium, $\det\Tmat = 1$ and the left-to-right and right-to-left
+transmission amplitudes are equal: $t_L = t_R = 1/T_{22}$.
+
+\subsection{Example: Fabry--P\'erot resonator}
+\label{ssec:fp-from-transfer}
+
+Consider a dielectric slab of refractive index $n$ and thickness $d$
+in air. The total transfer matrix is the product of three matrices:
+the entrance interface, the propagation through the slab, and the exit
+interface. Using the Fresnel interface matrices and the propagation
+matrix from Section~\ref{sec:single-layer}:
+\begin{equation}
+ \Tmat_{\mathrm{FP}} = \Tmat_{\mathrm{exit}}\,\Tmat_{\mathrm{prop}}\,\Tmat_{\mathrm{entrance}}.
+ \label{eq:fp-transfer-product}
+\end{equation}
+The entrance interface matrix (from air to the slab, normal incidence)
+is
+\begin{equation}
+ \Tmat_{\mathrm{entrance}} = \frac{1}{2n}
+ \begin{pmatrix} n+1 & n-1 \\ n-1 & n+1 \end{pmatrix},
+ \label{eq:entrance-interface}
+\end{equation}
+the propagation matrix through the slab is
+\begin{equation}
+ \Tmat_{\mathrm{prop}} = \begin{pmatrix}
+ e^{ink_0 d} & 0 \\ 0 & e^{-ink_0 d}
+ \end{pmatrix},
+ \label{eq:fp-propagation-matrix}
+\end{equation}
+where $k_0 = \omega/c$, and the exit interface matrix (from the slab
+to air) is
+\begin{equation}
+ \Tmat_{\mathrm{exit}} = \frac{1}{2}
+ \begin{pmatrix} 1+1/n & 1-1/n \\ 1-1/n & 1+1/n \end{pmatrix}.
+ \label{eq:exit-interface}
+\end{equation}
+Carrying out the matrix multiplication and extracting $T_{22}$, the
+transmission amplitude is
+\begin{equation}
+ t = \frac{1}{T_{22}}
+ = \frac{4n\,e^{-ink_0 d}}{(1+n)^2 - (1-n)^2\,e^{2ink_0 d}},
+ \label{eq:fp-transmission-amplitude}
+\end{equation}
+and the transmission intensity is the Airy function
+\begin{equation}
+ |t|^2 = \frac{1}{1 + F\sin^2(nk_0 d)},
+ \qquad F = \frac{4R}{(1-R)^2},
+ \label{eq:airy-from-transfer}
+\end{equation}
+where $R = |(n-1)/(n+1)|^2$ is the single-interface power reflectance
+and $F$ is the coefficient of finesse. This recovers the result
+derived from physical arguments in Chapter~\ref{ch:boundaries} and
+provides a systematic framework for extending the calculation to
+multilayer stacks.
+
+\paragraph{Resonance condition and QNM connection.}
+The resonances of the Fabry--P\'erot cavity correspond to the poles of
+the transmission amplitude, i.e.\ the zeros of $T_{22}(\omega)$.
+From~\eqref{eq:fp-transmission-amplitude}, the pole condition is
+$(1+n)^2 = (1-n)^2\,e^{2ink_0 d}$, which gives
+\begin{equation}
+ \tilde{\omega}_m = \frac{c}{nd}\left(m\pi - i\ln\frac{1+n}{|1-n|}\right),
+ \qquad m = 0, \pm 1, \pm 2, \ldots
+ \label{eq:fp-poles-transfer}
+\end{equation}
+The real part gives the resonance frequencies (equally spaced by the
+free spectral range $\pi c/(nd)$); the imaginary part gives the decay
+rate, which equals the QNM linewidth $\gamma = c\,\ln|(1+n)/(1-n)|/(nd)$
+derived in Chapter~\ref{ch:qnm}. The transfer-matrix approach thus
+provides a systematic route from multilayer geometry to QNM frequencies,
+applicable to arbitrary one-dimensional photonic structures including
+those with gain, loss, and dispersion.

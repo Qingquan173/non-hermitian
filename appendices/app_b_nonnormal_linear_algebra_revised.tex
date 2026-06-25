@@ -1,0 +1,397 @@
+\chapter{Non-Normal Linear Algebra}
+\label{app:nonnormal}
+
+This appendix collects the linear-algebra results that underpin the
+non-Hermitian spectral theory used throughout the book. The central
+theme is \emph{non-normality}: a matrix $A$ is normal if
+$A A^\dagger = A^\dagger A$; Hermitian, unitary, and skew-Hermitian
+matrices are all normal. A non-normal matrix can have a complete set
+of eigenvectors, but they are not orthogonal, and the spectral behavior
+under perturbation is qualitatively different from the normal case.
+Non-Hermitian photonic operators---the Maxwell operator with complex
+$\epsr$, the scattering matrix near an EP, the effective Hamiltonian of
+a coupled-mode model---are generically non-normal.
+
+
+%% ================================================================
+\section{Left and right eigenvectors}
+\label{sec:left-right}
+
+For a matrix $A \in \mathbb{C}^{n \times n}$, the \emph{right
+eigenvector} $|r_j\rangle$ and the \emph{left eigenvector}
+$\langle l_j|$ associated with eigenvalue $\lambda_j$ satisfy
+\begin{equation}
+ A\,|r_j\rangle = \lambda_j\,|r_j\rangle, \qquad
+ \langle l_j|\,A = \lambda_j\,\langle l_j|.
+ \label{eq:left-right-def}
+\end{equation}
+Equivalently, $\langle l_j|$ is a right eigenvector of $A^\dagger$
+with eigenvalue $\lambda_j^*$.
+
+For a normal matrix, left and right eigenvectors coincide (up to
+normalization):\ $|l_j\rangle = |r_j\rangle$. For a non-normal matrix,
+they differ, and the angle between corresponding left and right
+eigenvectors can be arbitrarily small---a situation that has dramatic
+physical consequences (enhanced noise, sensitivity to perturbation,
+mode non-orthogonality).
+
+
+%% ================================================================
+\section{Biorthogonality}
+\label{sec:biorthogonality-app}
+
+If $A$ has $n$ distinct eigenvalues, the left and right eigenvectors
+form a \emph{biorthogonal} system:
+\begin{equation}
+ \langle l_i | r_j \rangle = \delta_{ij}\,N_j,
+ \label{eq:biorthogonal}
+\end{equation}
+where $N_j = \langle l_j | r_j \rangle$ is a nonzero normalization
+constant (which is generally complex for non-normal matrices). The
+biorthogonal normalization convention sets $N_j = 1$ for all $j$ by
+rescaling.
+
+The spectral decomposition of $A$ takes the biorthogonal form
+\begin{equation}
+ A = \sum_{j=1}^n \lambda_j\,|r_j\rangle\langle l_j|,
+ \label{eq:spectral-biorthogonal}
+\end{equation}
+and the resolvent is
+\begin{equation}
+ (z - A)^{-1} = \sum_{j=1}^n \frac{|r_j\rangle\langle l_j|}
+ {z - \lambda_j}.
+ \label{eq:resolvent-biorthogonal}
+\end{equation}
+These formulas generalize the Hermitian spectral theorem to the
+non-normal case. They are the mathematical foundation for the
+quasinormal-mode expansion (Chapter~\ref{ch:qnm}) and the
+biorthogonal Berry phase (Chapter~\ref{ch:complex-bands}).
+
+
+%% ================================================================
+\section{Jordan chains and defective eigenvalues}
+\label{sec:jordan-app}
+
+When two or more eigenvalues coalesce, the eigenvectors may also
+coalesce, producing a \emph{defective} eigenvalue---an exceptional
+point (Chapter~\ref{ch:exceptional-points}).
+
+\subsection{Jordan normal form}
+\label{ssec:jordan-form}
+
+At a defective eigenvalue $\lambda_0$ of algebraic multiplicity $m$ and
+geometric multiplicity $g < m$, the matrix $A$ cannot be diagonalized.
+Instead, the relevant block of the Jordan normal form is
+\begin{equation}
+ J_m(\lambda_0) = \begin{pmatrix}
+ \lambda_0 & 1 & 0 & \cdots & 0 \\
+ 0 & \lambda_0 & 1 & \cdots & 0 \\
+ \vdots & & \ddots & \ddots & \vdots \\
+ 0 & \cdots & 0 & \lambda_0 & 1 \\
+ 0 & \cdots & 0 & 0 & \lambda_0
+ \end{pmatrix}
+ \in \mathbb{C}^{m \times m}.
+ \label{eq:jordan-block-app}
+\end{equation}
+
+\subsection{Generalized eigenvectors}
+\label{ssec:generalized-evecs}
+
+The Jordan chain associated with $J_m(\lambda_0)$ consists of vectors
+$|v_0\rangle, |v_1\rangle, \ldots, |v_{m-1}\rangle$ satisfying
+\begin{equation}
+ (A - \lambda_0)\,|v_0\rangle = 0, \qquad
+ (A - \lambda_0)\,|v_p\rangle = |v_{p-1}\rangle,
+ \quad p = 1, \ldots, m-1.
+ \label{eq:jordan-chain-app}
+\end{equation}
+Only $|v_0\rangle$ is a true eigenvector; the higher-order vectors
+$|v_p\rangle$ are \emph{generalized eigenvectors}. At a second-order
+EP ($m = 2$), there is one eigenvector and one generalized eigenvector;
+the biorthogonal decomposition~\eqref{eq:spectral-biorthogonal} breaks
+down and must be replaced by the Jordan decomposition.
+
+\subsection{Resolvent near an EP}
+\label{ssec:resolvent-ep}
+
+Near a second-order EP at $\lambda_0$, the resolvent has a
+second-order pole:
+\begin{equation}
+ (z - A)^{-1} \approx
+ \frac{|v_1\rangle\langle w_0|}{(z - \lambda_0)^2}
+ + \frac{|v_0\rangle\langle w_0| + |v_1\rangle\langle w_1|}
+ {z - \lambda_0}
+ + \text{regular},
+ \label{eq:resolvent-ep}
+\end{equation}
+where $\langle w_0|$ and $\langle w_1|$ are the left Jordan-chain
+vectors. The double pole produces algebraic (rather than exponential)
+temporal growth---the hallmark of an EP in time-domain experiments and
+the origin of the enhanced transient response.
+
+
+%% ================================================================
+\section{Petermann factor and excess noise}
+\label{sec:petermann-app}
+
+The Petermann factor quantifies the enhancement of spontaneous emission
+(and, more generally, noise) in a non-normal system. For a mode with
+right eigenvector $|r_j\rangle$ and left eigenvector $\langle l_j|$,
+the Petermann factor is
+\begin{equation}
+ K_j = \frac{\langle r_j | r_j \rangle \;\langle l_j | l_j \rangle}
+ {|\langle l_j | r_j \rangle|^2} \ge 1,
+ \label{eq:petermann-def}
+\end{equation}
+with equality if and only if $|l_j\rangle = |r_j\rangle$ (the normal
+case).
+
+\subsection{Physical interpretation}
+\label{ssec:petermann-physics-app}
+
+In a laser, spontaneous emission couples to the lasing mode with an
+amplitude proportional to $|\langle l_j | r_j \rangle|^{-1}$. When
+the left and right eigenvectors are nearly orthogonal (as happens near
+an EP), this coupling is enhanced, broadening the laser linewidth by
+the factor $K_j$:
+\begin{equation}
+ \Delta\nu = K_j\,\Delta\nu_{\mathrm{ST}},
+ \label{eq:petermann-linewidth-app}
+\end{equation}
+where $\Delta\nu_{\mathrm{ST}}$ is the Schawlow--Townes linewidth.
+
+\subsection{Scaling near an EP}
+\label{ssec:petermann-ep}
+
+Near a second-order EP, the overlap $\langle l_j | r_j \rangle$
+vanishes as $\sqrt{\epsilon}$ where $\epsilon$ is the distance from
+the EP in parameter space. Therefore the Petermann factor diverges as
+\begin{equation}
+ K_j \sim \frac{1}{\epsilon}
+ \label{eq:petermann-ep-scaling}
+\end{equation}
+near the EP. In common equal-resource sensing models, the associated
+noise growth can offset the enhanced frequency splitting
+$\Delta\omega \sim \sqrt{\epsilon}$ in a signal-to-noise proxy, as
+discussed in Chapter~\ref{ch:devices}. The quantitative cancellation is
+not universal; it depends on the measurement protocol, noise channels,
+and normalization of the sensor response.
+
+For an $n$-th order EP, analogous power-law divergences appear, but the
+resulting precision bound must be evaluated from the full noise model
+rather than inferred from the eigenvalue splitting alone.
+
+
+%% ================================================================
+\section{Phase rigidity}
+\label{sec:phase-rigidity}
+
+The \emph{phase rigidity} of a mode is the inverse of the Petermann
+factor:
+\begin{equation}
+ r_j = \frac{|\langle l_j | r_j \rangle|^2}
+ {\langle r_j | r_j \rangle \;\langle l_j | l_j \rangle}
+ = K_j^{-1} \in [0, 1].
+ \label{eq:phase-rigidity-def}
+\end{equation}
+A phase rigidity of $r_j = 1$ indicates a normal (Hermitian-like) mode;
+$r_j \to 0$ indicates an EP where the mode becomes maximally
+non-orthogonal.
+
+
+%% ================================================================
+\section{Pseudospectra}
+\label{sec:pseudospectra}
+
+The spectrum of a non-normal matrix can be misleading: eigenvalues may
+be highly sensitive to perturbations even when they are well separated.
+The \emph{$\epsilon$-pseudospectrum} quantifies this sensitivity.
+
+\subsection{Definition}
+\label{ssec:pseudospec-def}
+
+The $\epsilon$-pseudospectrum of $A$ is the set of complex numbers
+$z$ such that $z$ is an eigenvalue of $A + E$ for some perturbation
+$\|E\| \le \epsilon$:
+\begin{equation}
+ \sigma_\epsilon(A) = \{z \in \mathbb{C} :
+ \|(z - A)^{-1}\| \ge \epsilon^{-1}\}.
+ \label{eq:pseudospectrum}
+\end{equation}
+For a normal matrix, the $\epsilon$-pseudospectrum is the union of
+$\epsilon$-disks around each eigenvalue. For a non-normal matrix, the
+pseudospectrum can extend far beyond these disks, indicating that
+eigenvalues can move large distances under small perturbations.
+
+\subsection{Physical relevance}
+\label{ssec:pseudospec-physics}
+
+Pseudospectra are relevant whenever the system is subject to
+perturbations---fabrication disorder, environmental fluctuations,
+or numerical discretization errors. For a photonic system operating
+near an EP, the pseudospectrum extends over a large region of the
+complex frequency plane, meaning that the eigenfrequencies are
+effectively unpredictable to within a band set by the perturbation
+strength. This is the spectral manifestation of the Petermann-factor
+divergence and the reason why EP-based devices require careful
+noise analysis (Chapter~\ref{ch:devices}).
+
+
+%% ================================================================
+\section{Matrix functions and the non-Hermitian exponential}
+\label{sec:matrix-exp}
+
+The time evolution of a system governed by $i\,\partial_t |\psi\rangle
+= A\,|\psi\rangle$ is
+\begin{equation}
+ |\psi(t)\rangle = e^{-iAt}\,|\psi(0)\rangle.
+ \label{eq:time-evolution}
+\end{equation}
+For a normal $A$, the evolution is a superposition of oscillating and
+decaying exponentials, and $\|e^{-iAt}\|$ is controlled by the largest
+imaginary part of the eigenvalues. For a non-normal $A$, the situation
+is richer: the Jordan chain at a defective eigenvalue contributes
+\emph{polynomial} growth factors
+\begin{equation}
+ e^{-iJ_m(\lambda_0)t} = e^{-i\lambda_0 t}
+ \begin{pmatrix}
+ 1 & -it & (-it)^2/2! & \cdots \\
+ 0 & 1 & -it & \cdots \\
+ \vdots & & \ddots & \ddots \\
+ 0 & \cdots & 0 & 1
+ \end{pmatrix},
+ \label{eq:jordan-exponential}
+\end{equation}
+so the amplitude can grow as $t^{m-1}$ even when the eigenvalue has
+a negative imaginary part (i.e., the mode is formally decaying). This
+\emph{transient growth} is a hallmark of non-normality and is
+observable as a power-law ring-up before the eventual exponential
+decay in photonic resonators near an EP.
+
+Additionally, even in the absence of defective eigenvalues, a highly
+non-normal matrix can produce large transient growth---the so-called
+\emph{pseudospectral} transient, where the norm $\|e^{-iAt}\|$ overshoots
+its long-time asymptote by a factor that can be estimated from the
+pseudospectrum. This effect is important for FDTD simulations of
+non-Hermitian photonic systems (Section~\ref{sec:fdtd}), where a
+transient overshoot can trigger numerical instability before the
+physical decay sets in.
+
+
+%% ================================================================
+\section{Examples}
+\label{sec:nonnormal-examples}
+
+\subsection{Jordan decomposition of a $2\times 2$ defective matrix}
+\label{ssec:jordan-2x2}
+
+The simplest defective matrix arises at an exceptional point of a
+$2\times 2$ non-Hermitian Hamiltonian. Consider
+\begin{equation}
+ A = \begin{pmatrix} \lambda_0 & 1 \\ 0 & \lambda_0 \end{pmatrix},
+ \label{eq:jordan-2x2-example}
+\end{equation}
+which is already in Jordan normal form $J_2(\lambda_0)$. This matrix
+has a single eigenvalue $\lambda_0$ with algebraic multiplicity~2 but
+geometric multiplicity~1: there is only one linearly independent
+eigenvector, $\mathbf{v}_1 = (1, 0)^\transpose$. The second vector in
+the Jordan chain is the \emph{generalized eigenvector} $\mathbf{v}_2$
+satisfying $(A - \lambda_0 I)\mathbf{v}_2 = \mathbf{v}_1$, which gives
+$\mathbf{v}_2 = (0, 1)^\transpose$.
+
+The time evolution is
+\begin{equation}
+ e^{-iAt} = e^{-i\lambda_0 t}
+ \begin{pmatrix} 1 & -it \\ 0 & 1 \end{pmatrix}.
+ \label{eq:jordan-2x2-evolution}
+\end{equation}
+Even if $\Im\lambda_0 < 0$ (the mode decays), the off-diagonal element
+$-it$ grows linearly before the exponential decay dominates. The
+maximum of $\|e^{-iAt}\|$ over time occurs at
+$t^* \sim 1/|\Im\lambda_0|$, with an envelope of order
+$1/(e|\Im\lambda_0|)$ before constant prefactors from the chosen norm
+are included. The transient amplification therefore diverges as the
+eigenvalue approaches the real axis, but the numerical prefactor is
+norm dependent.
+
+\subsection{Schur decomposition and its use}
+\label{ssec:schur-decomp}
+
+Every square matrix $A$ admits a Schur decomposition $A = Q T Q^{-1}$,
+where $Q$ is unitary and $T$ is upper triangular with the eigenvalues on
+the diagonal. Unlike the Jordan form, which requires exact knowledge of
+the eigenvector structure, the Schur form is numerically stable and can
+be computed by standard algorithms (QR iteration).
+
+The Schur form reveals the \emph{departure from normality}
+$\Delta_F = \|A\|_F^2 - \sum_i |\lambda_i|^2$, where $\|\cdot\|_F$
+is the Frobenius norm. For a normal matrix, $\Delta_F = 0$ (the Schur
+form is diagonal); for a non-normal matrix, $\Delta_F > 0$ measures the
+energy stored in the off-diagonal elements of $T$, which is the source
+of transient amplification and pseudospectral broadening.
+
+For photonic applications, the Schur decomposition is preferable to the
+Jordan form for three reasons. First, it is numerically robust: no
+special treatment is needed for nearly defective matrices. Second, the
+unitary factor $Q$ preserves norms, making it easy to compute
+$\|e^{-iAt}\|$ from $\|e^{-iTt}\|$. Third, the off-diagonal elements
+of $T$ give a direct and intuitive measure of the non-Hermitian coupling
+between modes---elements that are absent in normal systems.
+
+\subsection{Kreiss constant and transient bounds}
+\label{ssec:kreiss}
+
+The maximum transient growth $\sup_{t \ge 0}\|e^{-iAt}\|$ can be
+bounded using the Kreiss matrix theorem. The \emph{Kreiss constant}
+\begin{equation}
+ \mathcal{K}(A) = \sup_{\Im z > \alpha_{\max}}
+ (\Im z - \alpha_{\max})\,\|(z - A)^{-1}\|,
+ \label{eq:kreiss-constant}
+\end{equation}
+where $\alpha_{\max} = \max_i \Im\lambda_i$ is the maximum eigenvalue
+imaginary part, satisfies the bounds
+\begin{equation}
+ \mathcal{K}(A) \le \sup_{t \ge 0} \|e^{-iAt}\|\,e^{\alpha_{\max}t}
+ \le e\,n\,\mathcal{K}(A),
+ \label{eq:kreiss-bounds}
+\end{equation}
+where $n$ is the matrix dimension. The Kreiss constant is computable
+from the resolvent norm (essentially the pseudospectrum) and provides
+a practical upper bound on the transient growth without requiring
+explicit time integration.
+
+For the $2\times 2$ PT-symmetric Hamiltonian near the EP
+($\gamma/\kappa = 0.99$), the Kreiss constant is
+$\mathcal{K} \approx 7.1$, consistent with the transient amplification
+factor of $7.09$ computed directly from~\eqref{eq:transient-max}. For
+larger photonic systems, the Kreiss constant can be estimated from the
+pseudospectrum using standard numerical linear algebra packages.
+
+\subsection{Non-normal perturbation theory}
+\label{ssec:nonnormal-perturbation}
+
+For a non-normal matrix $A$ with a defective eigenvalue $\lambda_0$ of
+algebraic multiplicity $m$, a generic perturbation $\epsilon B$ splits
+the eigenvalue into $m$ branches:
+\begin{equation}
+ \lambda_j(\epsilon) = \lambda_0
+ + \epsilon^{1/m}\,c_j + O(\epsilon^{2/m}),
+ \qquad j = 1, \ldots, m,
+ \label{eq:puiseux-series}
+\end{equation}
+where $c_j$ are the $m$-th roots of a coupling coefficient that depends
+on the perturbation matrix $B$ and the Jordan chain vectors. This
+Puiseux series expansion is the mathematical basis for the enhanced
+spectral response at exceptional points: a perturbation of order
+$\epsilon$ produces an eigenvalue splitting of order
+$\epsilon^{1/m}$, which for small $\epsilon$ is much larger than the
+linear splitting $\sim\epsilon$ of a non-defective eigenvalue.
+
+However, the Puiseux expansion is \emph{not} isotropic in the
+perturbation: the coefficient $c_j$ depends on the \emph{direction} of
+the perturbation in parameter space, not just its magnitude. For
+certain perturbation directions (those orthogonal to the Jordan chain
+coupling), the splitting can be much smaller than $\epsilon^{1/m}$ or
+even vanish. This anisotropy is important for EP-based sensing: the
+enhanced response occurs only for perturbations that couple to the
+Jordan chain, not for arbitrary environmental noise.

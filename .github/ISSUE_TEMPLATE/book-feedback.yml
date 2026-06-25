@@ -1,0 +1,45 @@
+name: Book feedback
+description: 针对某本 AI 著作提交阅读意见、结构建议或内容问题
+title: "[Book Feedback] "
+labels: ["feedback", "needs-triage"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: 章节或页码
+      placeholder: 第 2 章 / p. 34 / 图 3-1
+    validations:
+      required: true
+  - type: dropdown
+    id: feedback_type
+    attributes:
+      label: 问题类型
+      options:
+        - 事实或引用问题
+        - 结构或表述建议
+        - 公式或图表问题
+        - 实验或推理问题
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: current_text
+    attributes:
+      label: 原文或问题描述
+      description: 请摘录必要片段，避免粘贴大段版权文本
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 建议修改
+      description: 说明你希望如何修改，以及依据是什么
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考资料
+      description: 链接、论文、数据集或其他证据
+    validations:
+      required: false

@@ -1,0 +1,37 @@
+name: Errata
+description: 报告明确勘误，例如事实、公式、引用、图表或排版错误
+title: "[Errata] "
+labels: ["errata", "needs-triage"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 发现问题的版本
+      placeholder: v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: 页码、章节或对象
+      placeholder: p. 12 / 公式 2.3 / 表 4-2
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 错误说明
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: 建议更正
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据或参考
+    validations:
+      required: false

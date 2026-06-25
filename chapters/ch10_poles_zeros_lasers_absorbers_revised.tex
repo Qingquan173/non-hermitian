@@ -1,0 +1,660 @@
+\chapter{Poles, Zeros, Lasers, and Absorbers}
+\label{ch:poles-zeros}
+
+\begin{chapterlead}
+The scattering matrix of an optical system encodes every linear response
+property---reflection, transmission, absorption, and amplification---as a
+function of frequency. Its singularity structure in the complex frequency
+plane tells us when the system lases (a pole reaches the real axis), when
+it perfectly absorbs (a zero sits on the real axis), and when it does
+both simultaneously (the CPA-laser point). This pole--zero description
+is used for non-Hermitian photonic systems through concrete examples.
+It also establishes the connection between time reversal,
+$\PT$ symmetry, and the CPA-laser effect~\cite{novitsky2019cpa,alizadeh2025lasing}, and clarifies the critical
+distinctions between exceptional points, CPA-laser thresholds, and
+maximum contrast conditions.
+\end{chapterlead}
+
+
+%% ================================================================
+\section{Scattering-matrix singularities revisited}
+\label{sec:singularities-revisited}
+
+Chapter~\ref{ch:boundaries} introduced the poles and zeros of
+$\Smat(\omega)$ as features of the complex frequency plane. We now
+develop this picture more systematically.
+
+\subsection{Poles: threshold lasing}
+\label{ssec:lasing-poles}
+
+A pole of $\Smat(\omega)$ at $\omtil = \omega_0 - i\gamma$ corresponds to
+a quasinormal mode (Chapter~\ref{ch:qnm}). For a passive system,
+$\gamma > 0$ and the pole lies below the real axis. If gain is introduced,
+$\gamma$ decreases; at threshold, $\gamma \to 0$ and the pole reaches the
+real axis:
+\begin{equation}
+ \Im\,\omtil_n = 0
+ \qquad\Longleftrightarrow\qquad
+ \text{lasing threshold}.
+ \label{eq:lasing-threshold}
+\end{equation}
+At this point, a self-sustained oscillation exists at real frequency
+$\omega_0$ with no external driving---the system is a laser.
+
+The physical picture is transparent in the pole--zero language: gain lifts
+the QNM poles toward the real axis. A passive cavity has all poles in the
+lower half-plane; adding gain is equivalent to reducing the imaginary parts
+of the poles. The first pole to reach the real axis sets the lasing
+threshold and frequency.
+
+\subsection{Zeros: coherent perfect absorption}
+\label{ssec:cpa-zeros}
+
+A zero of $\det\Smat(\omega)$ at real $\omega$ means there exists a
+specific combination of incoming waves such that the outgoing field
+vanishes identically. All incident energy is absorbed. This is
+\emph{coherent perfect absorption} (CPA)~\cite{chong2010symmetry}.
+
+CPA requires precise control of the relative phase and amplitude of the
+incoming beams. For a two-port system, the CPA condition is
+\begin{equation}
+ \det\Smat(\omega_{\mathrm{CPA}}) = 0
+ \quad\Longleftrightarrow\quad
+ \text{an eigenvalue of } \Smat \text{ vanishes}.
+ \label{eq:cpa-condition}
+\end{equation}
+
+\subsection{The meromorphic structure}
+\label{ssec:meromorphic}
+
+The scattering matrix $\Smat(\omega)$ of a finite photonic structure is a
+meromorphic function of $\omega$: it is analytic everywhere in the complex
+plane except at isolated poles. Any meromorphic matrix can be written in
+terms of its poles and zeros as a product expansion. For a scalar
+reflection or transmission coefficient $s(\omega)$, this takes the form
+\begin{equation}
+ s(\omega) = A\,\prod_j \frac{\omega - z_j}{\omega - p_j},
+ \label{eq:pole-zero-product}
+\end{equation}
+where $\{p_j\}$ are the poles, $\{z_j\}$ are the zeros, and $A$ is a
+constant prefactor. This representation makes the spectral response a
+direct map of the singularity positions:
+\begin{itemize}
+ \item Near a pole $p_j$, the response $|s(\omega)|^2$ diverges---a
+ sharp amplification peak.
+ \item Near a zero $z_j$, the response vanishes---a sharp absorption dip.
+ \item Between a nearby pole--zero pair, the response exhibits a Fano
+ line shape: asymmetric with a rapid transition from absorption to
+ amplification.
+\end{itemize}
+
+
+%% ================================================================
+\section{Example: Fabry--P\'erot cavity}
+\label{sec:fabry-perot-poles}
+
+The Fabry--P\'erot cavity is the simplest photonic structure that
+illustrates the full pole--zero framework.
+
+\subsection{Setup and transfer matrix}
+\label{ssec:fp-setup}
+
+Consider a dielectric slab of thickness $L$, refractive index
+$n = n' + in''$ (with $n'' > 0$ for loss and $n'' < 0$ for gain),
+embedded in vacuum. The transfer matrix for the slab, including the two
+air--dielectric interfaces, is (Appendix~\ref{app:transfer})
+\begin{equation}
+ \Tmat = \frac{1}{4n}\begin{pmatrix}
+ (n+1)^2 e^{-i\phi} - (n-1)^2 e^{i\phi} & (n^2-1)(e^{i\phi}-e^{-i\phi}) \\
+ (n^2-1)(e^{-i\phi}-e^{i\phi}) & (n+1)^2 e^{i\phi} - (n-1)^2 e^{-i\phi}
+ \end{pmatrix},
+ \label{eq:fp-transfer}
+\end{equation}
+where $\phi = n\omega L/c$ is the single-pass phase. The transmission
+coefficient is $t = 1/T_{22}$.
+
+\subsection{Pole positions}
+\label{ssec:fp-poles}
+
+The poles of $t(\omega)$ are the zeros of $T_{22}$, which satisfy the
+round-trip resonance condition
+\begin{equation}
+ r_{12}^2\,e^{-2in\omega L/c} = 1,
+ \label{eq:fp-roundtrip}
+\end{equation}
+where $r_{12} = (n-1)/(n+1)$ is the Fresnel reflection coefficient at
+each interface. For weak material loss or gain, write
+$r_{12} \approx |r_{12}|\,e^{i\varphi_r}$ using the real background
+index $n'$. The pole frequencies are then approximately
+\begin{equation}
+ \omtil_m \approx \frac{c}{n' L}\bigl(m\pi - \varphi_r\bigr)
+ - i\,\frac{c}{n' L}\,\ln\frac{1}{|r_{12}|},
+ \qquad m = 0, \pm 1, \pm 2, \ldots
+ \label{eq:fp-poles}
+\end{equation}
+For the lossless reference cavity, the imaginary part is negative: all
+poles lie below the real axis. The mirror-limited decay rate is
+$\gamma_m = (c/n'L)\ln(1/|r_{12}|)$; material absorption adds to this
+decay, while material gain subtracts from it.
+
+\paragraph{Counting poles and zeros.}
+For the Fabry--P\'erot slab, the poles and zeros of the scalar
+transmission $t(\omega)$ are approximately equally spaced in the complex
+plane with a free spectral range $\Delta\omega = \pi c/(n'L)$ when the
+dispersion and absorption are weak. In the lossless reference cavity,
+zeros are the time reverses of the poles and appear at the conjugate
+positions. Material loss or gain moves the zeros as well as the poles;
+the zero motion is what makes coherent perfect absorption possible.
+
+For a slab with $n' = 3.5$ and $L = 300\;$nm at telecom wavelengths
+($\lambda \sim 1550\;$nm), the free spectral range is
+$\Delta\omega \approx 4.49 \times 10^{14}\;$rad/s, and the Fresnel
+reflectivity $|r_{12}|^2 = [(3.5-1)/(3.5+1)]^2 \approx 0.309$ gives
+a quality factor $Q = \omega_0/(2\gamma_0) \approx 2.7$
+for the lowest-order mode. The low $Q$ makes the pole--zero structure
+well separated and easy to resolve, which is why this cavity is ideal
+for pedagogical demonstration of the scattering singularity framework.
+
+\subsection{Adding gain: pole motion toward lasing}
+\label{ssec:fp-gain}
+
+If the slab material has gain ($n'' < 0$), the imaginary part of the
+propagation phase $\phi$ acquires a positive contribution that
+counteracts the mirror loss. The pole frequency becomes
+\begin{equation}
+ \Im\,\omtil_m = -\frac{c}{n'L}\bigl[\ln(1/|r_{12}|) + n''\omega_m L/c\bigr].
+ \label{eq:fp-pole-gain}
+\end{equation}
+When $|n''|\omega_m L/c = \ln(1/|r_{12}|)$, the imaginary part vanishes
+and the pole reaches the real axis: this is the lasing threshold for mode
+$m$. The threshold gain is
+\begin{equation}
+ g_{\mathrm{th}} = \frac{2\ln(1/|r_{12}|)}{L},
+ \label{eq:fp-threshold}
+\end{equation}
+where $g_{\mathrm{th}} = 2|n''|\omega/c$ is the power gain coefficient.
+This is the standard textbook result, but here it emerges naturally as a
+statement about pole motion in the complex plane.
+
+\subsection{Zero positions and CPA}
+\label{ssec:fp-zeros}
+
+The zeros of $\det\Smat$ for the Fabry--P\'erot slab satisfy the
+time-reversed round-trip condition:
+\begin{equation}
+ r_{12}^{*2}\,e^{-2in^*\omega L/c} = 1.
+ \label{eq:fp-zero-condition}
+\end{equation}
+For a purely lossy slab ($n'' > 0$), the zeros lie in the upper
+half-plane. As loss increases, zeros descend toward the real axis.
+CPA occurs when a zero reaches the real axis: the slab absorbs all
+coherently incident light at the CPA frequency.
+
+The CPA threshold loss is the mirror image of the lasing threshold gain:
+\begin{equation}
+ \alpha_{\mathrm{CPA}} = \frac{2\ln(1/|r_{12}|)}{L},
+ \label{eq:fp-cpa-threshold}
+\end{equation}
+confirming the time-reversal duality~\cite{sweeney2019perfectly,wang2021coherent}: CPA is lasing run backward.
+
+\paragraph{Explicit pole--zero map for the Fabry--P\'erot cavity.}
+For the $n' = 3.5$, $L = 300\;$nm slab, the first three poles are at
+$\omtil_m/\Delta\omega = m - i\,0.187$ for $m = 1, 2, 3$, and the
+corresponding zeros at $\omtil_m^*/\Delta\omega = m + i\,0.187$. As
+gain is added ($n'' \to -|n''|$), each pole moves vertically upward by
+$\delta(\Im\omtil) = |n''|\omega_m/n'$. The lasing threshold for
+mode $m$ is $|n''|_{\mathrm{th}} = \ln(1/|r_{12}|)\,c/(\omega_m L)
+= 0.187\,\Delta\omega/\omega_m$. Simultaneously, each zero moves
+downward by the same amount---the gain that brings a pole to the real
+axis pushes its partner zero away. Only in a $\PT$-symmetric
+configuration (gain and loss in separate halves of the cavity) do a
+pole and zero converge on the real axis simultaneously, producing the
+CPA-laser point.
+
+%% ================================================================
+\section{Time reversal and the CPA-laser duality}
+\label{sec:time-reversal}
+
+CPA and lasing are connected by time reversal. A laser emits coherent
+radiation with no input; CPA absorbs coherent radiation with no output.
+Formally, if $\Smat(\omega_L)$ has a pole (lasing), then
+$\Smat^{-1}(\omega_L)$ has a zero---and $\Smat^{-1}$ is the scattering
+matrix of the time-reversed system (with gain and loss
+exchanged)~\cite{chong2010symmetry}.
+
+\subsection{Formal statement}
+\label{ssec:tr-formal}
+
+Let $\Smat(\omega)$ be the scattering matrix of a linear system with
+material parameters $\epsr(\rr)$. The time-reversed system has
+$\varepsilon_{\mathrm{TR}}(\rr) = \epsr^*(\rr)$ (gain $\leftrightarrow$ loss),
+and its scattering matrix is
+\begin{equation}
+ \Smat_{\mathrm{TR}}(\omega) = [\Smat(\omega^*)]^{*\,-1}.
+ \label{eq:s-time-reversed}
+\end{equation}
+At real frequencies, $\Smat_{\mathrm{TR}}(\omega) = [\Smat(\omega)]^{-1\,*}$.
+The poles of $\Smat$ become zeros of $\Smat_{\mathrm{TR}}$, and vice versa.
+
+\subsection{CPA-laser point}
+\label{ssec:cpa-laser}
+
+For a system with both gain and loss, lasing and CPA can occur at the
+\emph{same} frequency if and only if a pole and a zero of $\Smat$
+coincide on the real axis. This simultaneous occurrence is the
+\emph{CPA-laser} point.
+
+A $\PT$-symmetric structure provides a natural setting for the CPA-laser
+because the $\PT$ constraint relates the inverse scattering matrix to
+the parity-transformed, time-reversed scattering matrix. For real
+frequencies this is the two-port relation discussed in
+Chapter~\ref{ch:pt-symmetric}; analytically continued into the complex
+plane, it pairs a pole at $\omtil$ with a zero at $\omtil^*$.
+When $\omtil$ reaches the real axis, the pole and zero meet
+simultaneously---the CPA-laser condition is automatically satisfied.
+
+%% ================================================================
+\section{$\PT$-symmetric scattering}
+\label{sec:pt-scattering}
+
+For a $\PT$-symmetric structure, the scattering matrix satisfies the
+fundamental relation~\eqref{eq:pt-s-relation}. At real frequencies, the
+consequences are:
+\begin{enumerate}
+ \item $|\det\Smat| = 1$: the product of scattering eigenvalues has
+ unit modulus.
+ \item Poles and zeros of $\Smat$ come in conjugate pairs:
+ if $\omtil$ is a pole, then $\omtil^*$ is a zero, and vice versa.
+ \item In the $\PT$-symmetric phase, both scattering eigenvalues are
+ unimodular: neither net amplification nor net absorption occurs.
+ \item In the $\PT$-broken phase, one eigenvalue has $|s| > 1$
+ (amplification) and the other has $|s| < 1$ (absorption).
+\end{enumerate}
+
+The CPA-laser point, where a pole and zero meet on the real axis,
+corresponds to the special situation where $\PT$ symmetry enforces
+$s_1 \to \infty$ and $s_2 \to 0$ simultaneously, keeping
+$|s_1 s_2| = 1$.
+
+\subsection{Scattering phase diagram}
+\label{ssec:scattering-phase-diagram}
+
+As the gain--loss parameter $\gamma$ increases from zero, the scattering
+eigenvalues trace paths in the complex plane. Three qualitatively
+different regimes emerge:
+\begin{enumerate}
+ \item \textbf{$\PT$-symmetric phase ($\gamma < \gamma_{\mathrm{EP}}$):}
+ both $|s_1| = |s_2| = 1$. The system is transparent on average,
+ though phase shifts differ from the passive case.
+ \item \textbf{$\PT$-broken phase ($\gamma_{\mathrm{EP}} < \gamma < \gamma_{\mathrm{CPA}}$):}
+ $|s_1| > 1$, $|s_2| < 1$. One channel amplifies, the other absorbs,
+ but neither diverges.
+ \item \textbf{CPA-laser threshold ($\gamma = \gamma_{\mathrm{CPA}}$):}
+ $|s_1| \to \infty$, $|s_2| \to 0$. The system simultaneously lases
+ and perfectly absorbs at the same frequency for different input states.
+\end{enumerate}
+This phase diagram highlights that the EP (a spectral degeneracy) and
+the CPA-laser (a pole--zero coincidence) generally occur at
+\emph{different} gain--loss values.
+
+%% ================================================================
+\section{Transfer-matrix analysis of a $\PT$ multilayer}
+\label{sec:pt-multilayer}
+
+\subsection{Setup}
+\label{ssec:multilayer-setup}
+
+Consider a multilayer stack of $N$ unit cells, each composed of a loss
+layer (thickness $d_1$, refractive index $n_1 = n_0 + i\kappa_I$) and a
+gain layer (thickness $d_2 = d_1$, refractive index
+$n_2 = n_0 - i\kappa_I$). This structure satisfies the $\PT$ condition
+$n(x) = n^*(-x)$ when the inversion center is placed at the interface
+between the loss and gain layers.
+
+\subsection{Output coefficients}
+\label{ssec:output-coefficients}
+
+The total transfer matrix $\Tmat^N$ determines the reflection and
+transmission through~\eqref{eq:pt-transfer-to-scatter}. As a function of
+the gain--loss parameter $\kappa_I$, three regimes
+emerge~\cite{novitsky2019cpa}:
+\begin{enumerate}
+ \item \textbf{Below the EP} ($\kappa_I < \kappa_{\mathrm{EP}}$):
+ the transmission and reflection show moderate asymmetry. The output
+ intensity can exceed the input, but the contrast between amplification
+ and absorption is limited.
+ \item \textbf{At the EP} ($\kappa_I = \kappa_{\mathrm{EP}}$):
+ the transfer-matrix eigenvalues coalesce. The output exhibits maximum
+ contrast between amplification and absorption for specific input
+ configurations.
+ \item \textbf{Above the EP} ($\kappa_I > \kappa_{\mathrm{EP}}$):
+ the system enters the $\PT$-broken phase. One scattering channel
+ grows exponentially with $N$ (laser-like amplification), while the
+ other is exponentially suppressed (CPA-like absorption).
+\end{enumerate}
+
+\subsection{CPA-laser versus exceptional point}
+\label{ssec:cpa-vs-ep}
+
+A common misconception is that the CPA-laser point coincides with the
+exceptional point. In general, it does not~\cite{novitsky2019cpa}.
+The EP is a property of the transfer matrix eigenvalues (a spectral
+degeneracy); the CPA-laser is a property of the scattering matrix
+singularities (a pole--zero coincidence on the real axis). The two
+conditions are related but distinct:
+\begin{itemize}
+ \item The EP can occur at a gain--loss value where no real-frequency
+ pole or zero exists.
+ \item The CPA-laser point can occur in the broken phase, away from
+ the EP.
+ \item Maximum output contrast (the ratio of amplification to
+ absorption for different input phases) need not coincide with
+ either the EP or the CPA-laser point.
+\end{itemize}
+
+This distinction is physically important: the EP controls the spectral
+topology and the eigenvector structure, while the CPA-laser controls the
+input--output energy balance.
+
+\begin{takeaway}[Three distinct critical points]
+In a $\PT$-symmetric scattering system, the exceptional point (spectral
+degeneracy), the CPA-laser point (pole--zero coincidence), and the point
+of maximum amplification--absorption contrast are in general three
+different parameter values. Conflating them leads to incorrect
+predictions of device performance.
+\end{takeaway}
+
+
+%% ================================================================
+\section{Spectral singularities}
+\label{sec:spectral-singularities}
+
+\subsection{Definition}
+\label{ssec:spectral-sing-def}
+
+A \emph{spectral singularity} is a point on the real frequency axis~\cite{longhi2010mml,chong2010symmetry}
+where the reflection or transmission coefficient diverges---i.e., a pole
+of $\Smat(\omega)$ at real $\omega$. Unlike the QNM poles discussed
+above, which lie in the lower half-plane for passive systems, a spectral
+singularity occurs on the real axis and is the scattering-theory
+description of threshold lasing in a linear gain medium.
+
+Mathematically, a spectral singularity at $\omega_s$ means the
+resolvent of the Maxwell operator is unbounded at $\omega_s$, but
+$\omega_s$ is not an eigenvalue in the standard sense: no
+square-integrable eigenfunction exists. Instead, a spectral singularity
+is a divergence of the scattering amplitude at a real frequency---an
+``eigenvalue embedded in the continuum'' of the non-self-adjoint
+operator.
+
+\subsection{Physical interpretation}
+\label{ssec:spectral-sing-physics}
+
+For optical systems, spectral singularities have two complementary
+physical manifestations that are connected by time reversal.
+
+The first is \emph{lasing}. A pole of $\Smat(\omega)$ on the real
+axis means that the system sustains a self-oscillating field at
+frequency $\omega_s$ without any external drive. In the meromorphic
+representation
+\begin{equation}
+ \Smat(\omega) = \Smat_{\mathrm{bg}}(\omega)\,
+ \prod_n \frac{\omega - z_n}{\omega - p_n},
+ \label{eq:smat-meromorphic}
+\end{equation}
+where $p_n$ are the QNM poles and $z_n$ the scattering zeros, lasing
+occurs when one pole $p_m$ migrates to the real axis:
+$\Im\,p_m \to 0^-$. At this point the denominator
+$(\omega - p_m)$ vanishes for real $\omega = \Re\,p_m$, and the
+scattering amplitudes diverge. The outgoing field grows without bound
+in time---the signature of stimulated emission overcoming all losses.
+
+The second manifestation is \emph{coherent perfect absorption} (CPA),
+also called anti-lasing. A zero of $\det\Smat(\omega)$ on the real
+axis means that there exists a coherent input field configuration that
+is perfectly absorbed: no light exits the structure. Mathematically,
+this is a spectral singularity of the \emph{inverse} scattering matrix
+$\Smat^{-1}$. By~\eqref{eq:smat-meromorphic}, CPA occurs when a zero
+$z_m$ sits on the real axis: $\Im\,z_m = 0$.
+
+The connection between lasing and CPA follows from the time-reversal
+structure of the S-matrix. A pole of a given system maps to a zero of
+the time-reversed system, in which gain and loss are interchanged. In a
+lossless reciprocal reference problem this reduces to the familiar
+conjugate pole--zero symmetry, but it is not a general consequence of
+reciprocity alone. In specially constrained active systems, most notably
+$\PT$-symmetric ones, a pole and a zero can be forced to reach the real
+axis together. This is the \emph{CPA-laser}
+point~\cite{chong2010symmetry,sweeney2019perfectly}, at which the system
+can act as either a laser or a perfect absorber depending on the input
+coherence.
+
+\paragraph{Quantitative threshold from S-matrix poles.}
+Combining the meromorphic representation~\eqref{eq:smat-meromorphic}
+with the Fabry--P\'erot pole positions from
+Section~\ref{ssec:fp-poles}, the lasing threshold for mode $m$ is
+reached when the gain $g$ satisfies
+\begin{equation}
+ g = g_{\mathrm{th},m}
+ = -\frac{2\,\Im\,p_m(g=0)}{c/n_g}
+ = \frac{2\ln(1/|r_{12}|)}{L}
+ + \alpha_{\mathrm{mat}},
+ \label{eq:threshold-from-poles}
+\end{equation}
+where $n_g$ is the group index, $\alpha_{\mathrm{mat}}$ accounts for
+material absorption, and $|r_{12}|$ is the mirror reflectivity. The
+first term is the mirror loss and the second the material loss; the
+threshold condition requires the gain to compensate both. This
+derivation makes explicit the pole-motion picture: gain ``lifts'' the
+pole at a rate $c\,g/(2n_g)$ until it reaches the real axis.
+
+\subsection{Threshold condition as a spectral singularity}
+\label{ssec:spectral-threshold}
+
+The spectral-singularity viewpoint provides a precise mathematical
+criterion for the lasing threshold that goes beyond the simple
+$\Im\omtil = 0$ condition. For a one-dimensional potential
+$V(x) = -\omega^2[\varepsilon(x) - 1]/c^2$ with complex $\varepsilon$,
+the spectral singularity occurs when the Jost function $f^+(\omega)$
+vanishes at a real $\omega$ while $f^-(\omega) \neq 0$. This is a
+stronger condition than a pole of the reflection coefficient: it
+requires that the outgoing-wave solution be bounded (not
+square-integrable) while the incoming-wave solution diverges.
+
+For the Fabry--P\'erot cavity, the Jost-function condition reduces to
+the round-trip condition~\eqref{eq:fp-roundtrip} evaluated on the real
+axis. But for more complex structures---photonic crystals, coupled
+resonators, random media---the Jost-function framework provides a
+rigorous definition of the lasing threshold that does not require
+identifying individual QNM poles.
+
+\subsection{Spectral singularities in $\PT$-symmetric potentials}
+\label{ssec:spectral-sing-pt}
+
+In a $\PT$-symmetric optical potential, spectral singularities have
+special properties. For reciprocal one-dimensional scattering, the
+generalized conservation relation can be written as
+\begin{equation}
+ \bigl||t(\omega)|^2-1\bigr|=\sqrt{R_L(\omega)R_R(\omega)},
+ \qquad R_{L,R}=|r_{L,R}|^2 .
+ \label{eq:pt-generalized-unitarity}
+\end{equation}
+A spectral singularity at $\omega_s$ corresponds to
+ $|t(\omega_s)| \to \infty$, and the reflection product diverges
+simultaneously---the system emits coherent radiation into the available
+channels. Its time-reversed partner is the CPA condition.
+
+
+%% ================================================================
+\section{Beyond $\PT$: general pole--zero engineering}
+\label{sec:pole-zero-engineering}
+
+The pole--zero framework extends beyond $\PT$-symmetric systems. For
+any linear photonic structure described by a scattering matrix, the
+motion of poles and zeros in the complex frequency plane under parameter
+changes follows simple rules that enable systematic device design.
+Gain moves poles upward in the complex plane, toward the real axis and
+eventually through it to lasing. Loss moves poles downward, increasing
+decay rates and broadening resonances. Structural changes---geometry,
+coupling strength, grating period---move poles horizontally, shifting
+the resonance frequency while leaving the decay rate largely unchanged.
+The zero structure is constrained by causality, time-reversal relations,
+and passivity bounds on real-frequency scattering, but zeros are not
+fixed by reciprocity alone. Indeed, in passive absorbers one deliberately
+moves a scattering zero onto the real axis by controlling the spatial
+profile and strength of absorption.
+These rules provide an intuitive design language: achieving CPA at a
+target frequency amounts to placing a zero on the real axis, while
+suppressing a parasitic lasing mode amounts to pushing its pole deeper
+into the lower half-plane.
+
+\subsection{Design as singularity placement}
+\label{ssec:design-singularity}
+
+Designing a photonic device---a laser, a sensor, a filter, or an
+absorber---can be viewed as engineering the positions of poles and zeros
+in the complex frequency plane to achieve the desired spectral response.
+This perspective unifies many seemingly different problems:
+\begin{itemize}
+ \item A narrow-band laser requires one pole close to the real axis with
+ all other poles far away.
+ \item A broadband absorber requires zeros spread along the real axis.
+ \item A Fano resonance requires a nearby pole--zero pair with
+ controlled spacing.
+ \item A flat-top filter requires poles and zeros arranged in a
+ Butterworth-like pattern.
+\end{itemize}
+
+\paragraph{Metasurface example: pole--zero placement for perfect
+absorption.}
+Consider a metasurface consisting of a periodic array of lossy
+dielectric resonators on a metallic back-reflector. The back-reflector
+eliminates transmission, so the scattering problem reduces to a
+single-port reflection coefficient $r(\omega)$. Perfect absorption at
+a target frequency $\omega_0$ requires $r(\omega_0) = 0$, i.e., a zero
+of $r$ on the real axis. In the pole--zero language, this is achieved
+by tuning the resonator geometry so that a pole at
+$\omtil = \omega_0 - i\gamma$ is paired with a zero at
+$z = \omega_0 + i\gamma'$, and then adjusting the material loss so
+that $\gamma' \to 0$. The critical-coupling condition
+$\gamma_{\mathrm{rad}} = \gamma_{\mathrm{abs}}$ (radiative decay
+equals absorptive decay) is precisely the statement that the zero
+reaches the real axis.
+
+With the global $e^{-i\omega t}$ convention used in this book, a
+one-port temporal coupled-mode model may be written in the dimensionless
+form
+\begin{equation}
+ r(\Delta)=
+ \frac{-i\Delta+\gamma_{\mathrm{abs}}-\gamma_{\mathrm{rad}}}
+ {-i\Delta+\gamma_{\mathrm{abs}}+\gamma_{\mathrm{rad}}},
+ \qquad \Delta=\omega-\omega_0.
+ \label{eq:one-port-critical-coupling}
+\end{equation}
+The pole and zero are therefore
+\begin{equation}
+ \omega_p=\omega_0-i(\gamma_{\mathrm{abs}}+\gamma_{\mathrm{rad}}),
+ \qquad
+ \omega_z=\omega_0+i(\gamma_{\mathrm{rad}}-\gamma_{\mathrm{abs}}).
+ \label{eq:one-port-pole-zero}
+\end{equation}
+The passive zero starts in the upper half-plane when absorption is weak
+and crosses the real axis at critical coupling.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=0.96\linewidth]{fig_f10_critical_coupling_absorber.pdf}
+ \caption{Critical coupling as zero placement in a one-port absorber.
+ The time convention is $e^{-i\omega t}$ and the reflection amplitude is
+ Eq.~\eqref{eq:one-port-critical-coupling}. (a)~Imaginary parts of
+ the pole and zero in Eq.~\eqref{eq:one-port-pole-zero} as the ratio
+ $\gamma_{\mathrm{abs}}/\gamma_{\mathrm{rad}}$ is varied. The pole
+ remains in the lower half-plane, while the passive zero begins in the
+ upper half-plane and reaches $\operatorname{Im}\omega_z=0$ at
+ $\gamma_{\mathrm{abs}}=\gamma_{\mathrm{rad}}$. (b)~Real-frequency
+ reflectance spectra for under-coupled
+ ($\gamma_{\mathrm{abs}}/\gamma_{\mathrm{rad}}=0.5$), critically
+ coupled, and over-coupled
+ ($\gamma_{\mathrm{abs}}/\gamma_{\mathrm{rad}}=2$) cases. The two
+ off-critical spectra have the same minimum reflectance,
+ $|r(0)|^2=1/9$, while critical coupling gives $|r(0)|^2=0$.}
+ \label{fig:ch10-critical-coupling-absorber}
+\end{figure}
+
+This design recipe generalises to multi-frequency perfect absorption:
+each target frequency requires one zero on the real axis, which in turn
+requires one resonator mode with matched radiative and absorptive
+decay rates. The pole--zero framework provides a systematic way to
+count the degrees of freedom and identify the minimum number of
+resonator modes needed for a given absorption bandwidth.
+
+There is an important physical distinction between critical coupling and
+lasing threshold. Critical coupling is still a passive condition: the
+pole remains in the lower half-plane because
+$\operatorname{Im}\omega_p=-(\gamma_{\mathrm{abs}}+
+\gamma_{\mathrm{rad}})<0$. The device absorbs perfectly at one real
+frequency not because the stored field grows without bound, but because
+the directly reflected wave and the field re-radiated by the resonator
+cancel exactly in the outgoing channel. In Maxwell language, the
+Poynting flux entering the resonator through the external channel equals
+the Ohmic or material-loss power dissipated inside the resonator. This
+is why the condition is often called \emph{impedance matching}: the
+external radiation resistance and internal absorption resistance are
+matched.
+
+This clarification prevents a common misconception. Moving a zero to
+the real axis is not the same as moving a pole to the real axis. The
+first produces a finite, stable absorbing solution for a particular
+coherent input; the second produces a self-sustained outgoing solution
+with no input. The two events can coincide only in special active
+systems such as the $\PT$-symmetric CPA-laser discussed above. In a
+one-port passive metasurface, only the zero reaches the real axis, so
+perfect absorption is compatible with stability, causality, and finite
+stored energy.
+
+\subsection{Passivity constraints}
+\label{ssec:passivity-poles}
+
+For a passive system (no gain), the poles of $\Smat(\omega)$ must lie in
+the lower half-plane. This is a direct consequence of causality and
+stability: the Green function of a passive system decays in the future,
+not the past. Scattering zeros obey different constraints. In a lossless
+unitary system they mirror the poles across the real axis; in a lossy
+passive system they can move onto the real axis, producing CPA, or away
+from the simple conjugate locations. Violating pole stability requires
+gain, which is the fundamental reason why lasers and CPA-lasers are
+active devices.
+
+\subsection{Connection to QNM perturbation theory}
+\label{ssec:pole-zero-qnm}
+
+The biorthogonal perturbation theory of Chapter~\ref{ch:qnm} provides
+the sensitivity of pole positions to material or geometric changes:
+\begin{equation}
+ \delta\omtil_n = -\frac{\omtil_n}{2}
+ \frac{\int \delta\epsr\,\tilde{\EE}_n\cdot\tilde{\EE}_n\;\dd^3r}
+ {\mathcal{N}_n}.
+ \label{eq:pole-shift-perturbation}
+\end{equation}
+Here $\mathcal{N}_n$ is the unconjugated QNM normalization, including the
+appropriate dispersive and surface or PML contribution. This formula
+directly connects the pole--zero engineering picture to the underlying
+Maxwell fields: placing gain where the relevant QNM has large overlap
+moves the pole most efficiently toward the real axis.
+
+
+%% ================================================================
+\section{Connections}
+\label{sec:ch10-forward}
+
+This closes the scattering part of the book. Exceptional points,
+$\PT$-symmetric optics, and pole--zero motion describe complementary
+aspects of non-Hermitian photonic systems driven by gain, loss, and
+coupling.
+
+Part~IV now turns to the topological structure of non-Hermitian photonic
+bands. Chapter~\ref{ch:berry-maxwell} builds Berry curvature directly
+from Maxwell fields; Chapter~\ref{ch:complex-bands} introduces complex
+bands and non-Hermitian gaps; and the subsequent chapters develop the
+photonic skin effect, point-gap topology, and the reconstruction of
+bulk-boundary correspondence.

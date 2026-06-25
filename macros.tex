@@ -1,0 +1,70 @@
+% ── Non-Hermitian Photonics — Project Macros ────────────────
+% Domain-specific commands used throughout the monograph.
+% Keep this file lean; add only macros used in multiple chapters.
+
+% ── Maxwell fields and operators ────────────────────────────
+\newcommand{\EE}{\mathbf{E}}             % electric field
+\newcommand{\HH}{\mathbf{H}}             % magnetic field
+\newcommand{\BB}{\mathbf{B}}             % magnetic flux density
+\newcommand{\DD}{\mathbf{D}}             % displacement field
+\newcommand{\JJ}{\mathbf{J}}             % current density
+\newcommand{\FF}{\mathbf{F}}             % generic vector field
+\renewcommand{\SS}{\mathbf{S}}           % Poynting vector or generic vector
+\newcommand{\rr}{\mathbf{r}}             % position vector
+\renewcommand{\aa}{\mathbf{a}}           % lattice vector
+\newcommand{\kk}{\mathbf{k}}             % wave vector
+\newcommand{\GG}{\mathbf{G}}             % reciprocal lattice vector
+\newcommand{\nn}{\hat{\mathbf{n}}}       % unit normal
+\newcommand{\curl}{\nabla\times}         % curl operator
+\newcommand{\divg}{\nabla\cdot}          % divergence
+\newcommand{\grad}{\nabla}               % gradient
+
+% ── Permittivity and permeability ───────────────────────────
+\newcommand{\eps}{\varepsilon}            % permittivity
+\newcommand{\epsr}{\varepsilon_{\mathrm{r}}}  % relative permittivity
+\newcommand{\mur}{\mu_{\mathrm{r}}}      % relative permeability
+\newcommand{\epsc}{\tilde{\varepsilon}}   % complex permittivity (with tilde)
+
+% ── Operators ───────────────────────────────────────────────
+\newcommand{\Lop}{\hat{\mathcal{L}}}     % generic linear operator
+\newcommand{\Mop}{\hat{\Theta}}          % Maxwell curl-curl operator
+\newcommand{\adj}{\dagger}               % Hermitian adjoint
+\newcommand{\transpose}{\mathsf{T}}      % transpose
+\DeclareMathOperator{\tr}{tr}             % trace
+\DeclareMathOperator{\diag}{diag}         % diagonal matrix
+\DeclareMathOperator{\Res}{Res}           % residue
+\renewcommand{\Im}{\operatorname{Im}}      % imaginary part
+\renewcommand{\Re}{\operatorname{Re}}      % real part
+\DeclareMathOperator{\sgn}{sgn}           % sign function
+
+% ── Non-Hermitian specific ──────────────────────────────────
+\newcommand{\PT}{\mathcal{PT}}            % PT symmetry
+\newcommand{\Smat}{\mathbf{S}}           % scattering matrix
+\newcommand{\Tmat}{\mathbf{T}}           % transfer matrix
+\newcommand{\omtil}{\tilde{\omega}}       % complex frequency
+\newcommand{\GBZ}{\mathrm{GBZ}}          % generalized Brillouin zone
+\newcommand{\BZ}{\mathrm{BZ}}            % Brillouin zone
+\newcommand{\NHSE}{\mathrm{NHSE}}        % non-Hermitian skin effect
+\newcommand{\wnum}{W}                     % winding number
+\newcommand{\Chern}{\mathcal{C}}          % Chern number
+
+% ── Berry phase and topology ────────────────────────────────
+\newcommand{\Acal}{\mathcal{A}}           % Berry connection
+\newcommand{\Fcal}{\mathcal{F}}           % Berry curvature
+\newcommand{\Qfac}{Q}                     % quality factor
+
+% ── Biorthogonal inner product ──────────────────────────────
+\newcommand{\bket}[1]{\left|#1\right\rangle}           % right eigenvector
+\newcommand{\bbra}[1]{\left\langle\!\left\langle#1\right|\right.}  % left eigenvector (double angle)
+\newcommand{\biinner}[2]{\left\langle\!\left\langle #1 \,\middle|\, #2 \right\rangle\!\right\rangle}  % biorthogonal inner product
+
+% ── Commonly used abbreviations in math ─────────────────────
+\newcommand{\cc}{\mathrm{c.c.}}          % complex conjugate
+\newcommand{\hc}{\mathrm{h.c.}}          % Hermitian conjugate
+\newcommand{\etal}{\textit{et~al.}}       % et al. in text
+
+% ── Units and constants ─────────────────────────────────────
+\newcommand{\vac}{0}                      % vacuum subscript
+\newcommand{\epsvac}{\varepsilon_0}       % vacuum permittivity
+\newcommand{\muvac}{\mu_0}               % vacuum permeability
+\newcommand{\cvac}{c}                     % speed of light in vacuum
